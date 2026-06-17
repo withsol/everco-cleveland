@@ -12,7 +12,7 @@ const amenities = [
 const testimonials = [
   {
     quote:
-      "We rented from a faceless management company for years. The EverCo felt like the opposite — they knew our names, fixed things before we even noticed, and the house was genuinely beautiful.",
+      "We rented from a faceless management company for years. The Ever Company felt like the opposite — they knew our names, fixed things before we even noticed, and the house was genuinely beautiful.",
     name: "Maren & Tom",
     detail: "Tenants in Lakewood, 3 years",
   },
@@ -49,7 +49,7 @@ export default function HomePage() {
               <span className="text-copper italic">putting down roots</span> in.
             </h1>
             <p className="text-charcoal-soft mt-8 max-w-xl text-lg leading-relaxed">
-              The EverCo is a family-run collection of beautifully renovated
+              The Ever Company is a family-run collection of beautifully renovated
               rental homes across Cleveland&apos;s western suburbs. Character-rich
               houses, modern comforts, and a landlord who actually answers the
               phone.
@@ -112,7 +112,7 @@ export default function HomePage() {
         <Container className="py-20">
           <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:items-center">
             <div>
-              <Eyebrow className="text-copper-light">The EverCo standard</Eyebrow>
+              <Eyebrow className="text-copper-light">The Ever Company standard</Eyebrow>
               <h2 className="text-cream mt-5 text-4xl">
                 Renting, the way it should feel.
               </h2>

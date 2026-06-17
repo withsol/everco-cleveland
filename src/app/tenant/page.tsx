@@ -4,7 +4,7 @@ import { Container, Eyebrow, ButtonLink } from "@/components/ui";
 export const metadata: Metadata = {
   title: "Tenant Portal",
   description:
-    "Current EverCo residents can pay rent, submit maintenance requests, and access lease documents through the tenant portal.",
+    "Current Ever Company residents can pay rent, submit maintenance requests, and access lease documents through the tenant portal.",
 };
 
 const portalActions = [

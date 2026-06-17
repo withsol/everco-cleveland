@@ -25,7 +25,7 @@ const values = [
 const timeline = [
   { year: "1986", text: "Grandpa Ev buys and rehabs his first duplex in Lakewood." },
   { year: "2004", text: "The second generation joins; the portfolio reaches a dozen homes." },
-  { year: "2018", text: "We formalize as The EverCo and bring renovations fully in-house." },
+  { year: "2018", text: "We formalize as The Ever Company and bring renovations fully in-house." },
   { year: "2024", text: "Sixty homes restored across six west-side neighborhoods." },
 ];
 
@@ -44,7 +44,7 @@ export default function AboutPage() {
                 one neighborhood.
               </h1>
               <p className="text-charcoal-soft mt-7 max-w-xl text-lg leading-relaxed">
-                The EverCo started in 1986 when Everett &ldquo;Ev&rdquo; Kowalski
+                The Ever Company started in 1986 when Everett &ldquo;Ev&rdquo; Kowalski
                 bought a tired duplex on a Lakewood side street, fixed it up after
                 his shifts, and rented it to a young couple who stayed eleven
                 years. Nearly four decades later, we&apos;re still doing the same

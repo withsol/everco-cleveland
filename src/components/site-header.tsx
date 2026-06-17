@@ -24,7 +24,7 @@ export function SiteHeader() {
           onClick={() => setOpen(false)}
         >
           <span className="font-serif text-forest text-xl font-semibold tracking-tight">
-            The EverCo
+            The Ever Company
           </span>
           <span className="eyebrow text-copper mt-1">Cleveland</span>
         </Link>

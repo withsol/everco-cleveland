@@ -17,10 +17,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://theeverco.com"),
+  metadataBase: new URL("https://theevercocleveland.com"),
   title: {
-    default: "The EverCo Cleveland — Premium Rentals on the West Side",
-    template: "%s · The EverCo Cleveland",
+    default: "The Ever Company — Premium West Side Cleveland Rentals",
+    template: "%s · The Ever Company",
   },
   description:
     "A family-run collection of thoughtfully renovated rental homes across Cleveland's western suburbs. Character-rich houses, modern comforts, and a landlord who actually answers the phone.",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "family-run property management",
   ],
   openGraph: {
-    title: "The EverCo Cleveland",
+    title: "The Ever Company",
     description:
       "Thoughtfully renovated rental homes across Cleveland's western suburbs.",
     type: "website",

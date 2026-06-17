@@ -5,11 +5,11 @@ import { InquiryForm } from "@/components/inquiry-form";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with The EverCo to schedule a tour or ask about a home. A real member of the family will respond within a business day.",
+    "Get in touch with The Ever Company to schedule a tour or ask about a home. A real member of the family will respond within a business day.",
 };
 
 const details = [
-  { label: "Email", value: "hello@theeverco.com", href: "mailto:hello@theeverco.com" },
+  { label: "Email", value: "hello@theevercocleveland.com", href: "mailto:hello@theevercocleveland.com" },
   { label: "Leasing office", value: "(216) 555-0142", href: "tel:+12165550142" },
   { label: "Maintenance (24/7)", value: "(216) 555-0188", href: "tel:+12165550188" },
 ];

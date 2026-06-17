@@ -6,7 +6,7 @@ import { properties } from "@/lib/properties";
 export const metadata: Metadata = {
   title: "Properties",
   description:
-    "Browse available and upcoming rental homes from The EverCo across Lakewood, Rocky River, Bay Village, and Cleveland's west side.",
+    "Browse available and upcoming rental homes from The Ever Company across Lakewood, Rocky River, Bay Village, and Cleveland's west side.",
 };
 
 const filters = ["All homes", "Available", "Coming Soon", "Lakewood", "Rocky River"];
