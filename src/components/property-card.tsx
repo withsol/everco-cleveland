@@ -9,7 +9,7 @@ function statusLabel(property: Property): string {
       ? `Coming Soon — ${property.statusNote}`
       : "Coming Soon";
   }
-  return "Available";
+  return property.statusNote ? `Available ${property.statusNote}` : "Available";
 }
 
 export function PropertyCard({ property }: { property: Property }) {

@@ -41,7 +41,7 @@ function statusLabel(property: NonNullable<ReturnType<typeof getProperty>>) {
       ? `Coming Soon — ${property.statusNote}`
       : "Coming Soon";
   }
-  return "Available";
+  return property.statusNote ? `Available ${property.statusNote}` : "Available";
 }
 
 export default async function PropertyDetailPage({
@@ -165,7 +165,7 @@ export default async function PropertyDetailPage({
                     href={`/contact?property=${encodeURIComponent(property.address)}`}
                     className="w-full"
                   >
-                    {property.status === "Available"
+                    {property.status === "Available" && !property.statusNote
                       ? "Inquire about this home"
                       : "Ask about availability"}
                   </ButtonLink>
