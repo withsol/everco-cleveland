@@ -54,6 +54,19 @@ export const properties: Property[] = [
       "The upper unit of a newly refinished luxury duplex. Stainless steel appliances, granite counters, and hardwood throughout, with a separate dining room and private washer/dryer. Move-in ready and fully furnished.",
     photo:
       "https://photos.zillowstatic.com/fp/953b1ab114a71836d94136f0c1413f88-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/312c99d0bb5dfe9e24ae130267d3695f-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/ad13a036e219217f49e646f30ee5d870-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/dffbdfd4ef91f4cd1824acada6f4e9f4-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/7f8a9468e0eceb8b92f03ec53aa4c8be-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/e2f2f641cbffeeea51fbb8a044c82e97-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/d6dce23a236b9deed937d69f4067ba98-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/92460a8c5389c42a5e20d71a054e7794-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/ae2ec13f2ad758bd7d72d649a59e4970-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/4c1f3f04825bd7f8873affc51b43e1d9-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/74f056c96b24b1820aac2bba1ad2b966-cc_ft_960.jpg",
+      "https://photos.zillowstatic.com/fp/c195b8f75eb6f47dd1b935dbccb56aff-cc_ft_960.jpg",
+    ],
   },
   {
     slug: "19931-westway-dr",
@@ -72,6 +85,12 @@ export const properties: Property[] = [
       "Newly refinished luxury apartment with stainless steel appliances, granite counters, and hardwood throughout. Separate dining room, kitchen peninsula, private washer/dryer, huge storage/bonus space, and a sun porch.",
     photo:
       "https://photos.zillowstatic.com/fp/405c14a65208d29cc1e7a8bb617a11ac-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/fcd30f8fda851975e6aa923b8a23b349-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/04c6056e591bfdd3156cc46805df9c7c-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/922f0c34aa979ba9535e880ad667ab8f-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/039f59f33d252e6b752cf20600479397-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "201-yoder-blvd",
@@ -88,6 +107,12 @@ export const properties: Property[] = [
       "A gorgeous ranch with an open-concept layout — a spacious kitchen flowing into a bright living room with fireplace. Primary suite with en-suite bath, large backyard, and an attached two-car garage.",
     photo:
       "https://photos.zillowstatic.com/fp/b40950f671ad5ee6ac2b0852da66bc0e-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/5769c7ec0aa6c0ccba51dd322719b8b7-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/023c7d8f78c07a37f1fbc906633b86ab-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/c6357c2e4f5aeed5b15a7044f47e876d-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/b11cc6742533856e465f83e2379667d5-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "187-sunset-rd",
@@ -130,6 +155,12 @@ export const properties: Property[] = [
       "A four-bedroom split level with basement, updated and freshly painted. Eat-in kitchen, formal dining with slider to a covered deck, and a spacious family room with fireplace. Attached two-car garage and fenced yard.",
     photo:
       "https://photos.zillowstatic.com/fp/f8c34eb53ad79586663cded95e72c362-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/749d284fee064a010768936e988dcba9-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/a889ac3f15048830597de8a06c01caf1-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/a9135e57c85ffdbe8818aaaf42b10abe-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/30ac74b4ff4e385fc1616c15f537ad63-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "183-parsons-dr",
@@ -146,6 +177,12 @@ export const properties: Property[] = [
       "Recently renovated with new vinyl plank flooring, stylish light fixtures, and stainless steel appliances. Eat-in kitchen with center island, spacious family room, and a super-sized laundry room. Fenced backyard, walkable to parks and Lake Erie.",
     photo:
       "https://photos.zillowstatic.com/fp/bc6cd3de4d094931400e25990022efb7-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/7fbd244f3324accb1a1aebfb734060b6-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/6d8918318723126775e5dba30d3f268a-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/5a3906994ed7e3814711999f6c902e7a-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/bcbaea4a2a73c6b9a34e53cb0a4793b3-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "514-cahoon-rd",
@@ -187,6 +224,12 @@ export const properties: Property[] = [
       "An incredible property in northern Avon Lake — quartz countertops, white cabinets, and newer appliances. Refinished wood floors, freshly painted, with a wood-burning fireplace and three bedrooms with gorgeous wood flooring upstairs. Nearly half-acre lot and a detached two-car garage.",
     photo:
       "https://photos.zillowstatic.com/fp/6046e4ebcdeeb2b064fb45d2fd16b964-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/a10f9946f8e3631c0c54eb365ab26cfa-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/d71c3215a9a1d76a5e18481cc46e12a2-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/269b68fd1f2501d994ac50be99bdeebc-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/97714d5deeffb3aa72ccad8a0b3094b1-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "27840-lincoln-rd",
@@ -204,6 +247,12 @@ export const properties: Property[] = [
       "A charming Cape Cod on a peaceful, quiet street in Bay Village. Cozy wood-burning fireplace, a completely remodeled kitchen with quartz countertops and stainless steel appliances, and a finished basement with full bathroom. Beautiful back deck with fenced backyard and a detached one-car garage.",
     photo:
       "https://photos.zillowstatic.com/fp/4f940775d3ebaf851d8710191a247408-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/81916ca86cd240244d32e6214cfb7e72-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/6dc11a7bdd4b282791f0a0e59e804714-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/9c78ead837c17ae24f01eb46c9445ed2-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/9891c25e2779e06165410d13eacdf154-cc_ft_576.jpg",
+    ],
   },
   {
     slug: "17073-drake-rd",
@@ -220,6 +269,12 @@ export const properties: Property[] = [
       "A well-maintained colonial with freshly painted interior, brand-new carpet upstairs, and new kitchen appliances. Family room with fireplace, French doors to a walk-out patio, and a fenced backyard with shed. Community pool, fitness center, and playground access.",
     photo:
       "https://photos.zillowstatic.com/fp/1c9277d83fc95a84eecdb2beeb261050-cc_ft_960.jpg",
+    gallery: [
+      "https://photos.zillowstatic.com/fp/27d6871eaed1d96ad4cceb824b651bbe-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/e022f4e235e7f6e7c7ba460400e09b7e-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/8fe24f90220e4baf7c9036cb04d8da19-cc_ft_576.jpg",
+      "https://photos.zillowstatic.com/fp/a60ad3c66f669c5123ed4a4f5263a989-cc_ft_576.jpg",
+    ],
     communityFeatures: ["Pool", "Fitness Center", "Playground", "Park"],
   },
 ];

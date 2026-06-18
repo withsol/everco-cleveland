@@ -24,6 +24,11 @@ export function PropertyGallery({
           sizes="(min-width: 1024px) 60vw, 100vw"
           className="object-cover"
         />
+        {images.length > 1 && (
+          <span className="bg-charcoal/70 text-paper absolute bottom-4 right-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide">
+            {active + 1} / {images.length}
+          </span>
+        )}
       </div>
 
       {images.length > 1 && (
