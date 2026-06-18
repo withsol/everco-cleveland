@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
-import { type Property, statusStyles } from "@/lib/properties";
+import { CardCarousel } from "@/components/card-carousel";
+import { type Property, propertyImages, statusStyles } from "@/lib/properties";
 
 function statusLabel(property: Property): string {
   if (property.status === "Leased") return "Currently Leased";
@@ -16,42 +16,37 @@ export function PropertyCard({ property }: { property: Property }) {
   const isLeased = property.status === "Leased";
 
   return (
-    <Link
-      href={`/properties/${property.slug}`}
-      className={`group focus-visible:outline-copper border-cream-deep bg-paper block overflow-hidden rounded-2xl border transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(43,40,38,0.45)] focus-visible:outline-2 focus-visible:outline-offset-2 ${
+    <article
+      className={`group border-cream-deep bg-paper has-[a:focus-visible]:ring-copper relative overflow-hidden rounded-2xl border transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(43,40,38,0.45)] has-[a:focus-visible]:ring-2 ${
         property.status === "Available"
           ? "ring-forest/30 shadow-[0_12px_30px_-22px_rgba(47,70,54,0.6)] ring-2"
           : ""
       }`}
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <Image
-          src={property.photo}
-          alt={`${property.address}, ${property.city}`}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
-            isLeased ? "saturate-[0.85]" : ""
-          }`}
-        />
-        {isLeased && (
-          <span className="absolute inset-0 bg-charcoal/10" aria-hidden />
-        )}
-        <span
-          className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide ${statusStyles[property.status]}`}
-        >
-          {statusLabel(property)}
-        </span>
-        {property.furnished && (
-          <span className="bg-paper/90 text-charcoal absolute bottom-4 left-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide">
-            Furnished{property.minStay ? ` · ${property.minStay}` : ""}
-          </span>
-        )}
-      </div>
+      <CardCarousel
+        slug={property.slug}
+        images={propertyImages(property)}
+        alt={`${property.address}, ${property.city}`}
+        isLeased={isLeased}
+        statusLabel={statusLabel(property)}
+        statusClass={statusStyles[property.status]}
+        furnishedLabel={
+          property.furnished
+            ? `Furnished${property.minStay ? ` · ${property.minStay}` : ""}`
+            : undefined
+        }
+      />
 
       <div className="p-6">
         <p className="eyebrow text-copper">{property.area}</p>
-        <h3 className="text-forest mt-2 text-xl">{property.address}</h3>
+        <h3 className="text-forest mt-2 text-xl">
+          <Link
+            href={`/properties/${property.slug}`}
+            className="after:absolute after:inset-0 focus-visible:outline-none"
+          >
+            {property.address}
+          </Link>
+        </h3>
         <p className="text-charcoal-soft mt-1 text-sm">
           {property.city} · {property.type}
           {property.built ? ` · Built ${property.built}` : ""}
@@ -129,6 +124,6 @@ export function PropertyCard({ property }: { property: Property }) {
           </span>
         </span>
       </div>
-    </Link>
+    </article>
   );
 }
