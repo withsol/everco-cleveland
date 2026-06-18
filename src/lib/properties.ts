@@ -60,12 +60,6 @@ export const properties: Property[] = [
       "https://photos.zillowstatic.com/fp/dffbdfd4ef91f4cd1824acada6f4e9f4-cc_ft_960.jpg",
       "https://photos.zillowstatic.com/fp/7f8a9468e0eceb8b92f03ec53aa4c8be-cc_ft_960.jpg",
       "https://photos.zillowstatic.com/fp/e2f2f641cbffeeea51fbb8a044c82e97-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/d6dce23a236b9deed937d69f4067ba98-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/92460a8c5389c42a5e20d71a054e7794-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/ae2ec13f2ad758bd7d72d649a59e4970-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/4c1f3f04825bd7f8873affc51b43e1d9-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/74f056c96b24b1820aac2bba1ad2b966-cc_ft_960.jpg",
-      "https://photos.zillowstatic.com/fp/c195b8f75eb6f47dd1b935dbccb56aff-cc_ft_960.jpg",
     ],
   },
   {
@@ -110,8 +104,6 @@ export const properties: Property[] = [
     gallery: [
       "https://photos.zillowstatic.com/fp/5769c7ec0aa6c0ccba51dd322719b8b7-cc_ft_576.jpg",
       "https://photos.zillowstatic.com/fp/023c7d8f78c07a37f1fbc906633b86ab-cc_ft_576.jpg",
-      "https://photos.zillowstatic.com/fp/c6357c2e4f5aeed5b15a7044f47e876d-cc_ft_576.jpg",
-      "https://photos.zillowstatic.com/fp/b11cc6742533856e465f83e2379667d5-cc_ft_576.jpg",
     ],
   },
   {
