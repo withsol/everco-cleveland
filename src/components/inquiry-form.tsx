@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { properties } from "@/lib/properties";
 
 const inputClass =
   "w-full rounded-xl border border-cream-deep bg-paper px-4 py-3 text-charcoal placeholder:text-charcoal-soft/60 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition";
 
-export function InquiryForm() {
+export function InquiryForm({ defaultProperty }: { defaultProperty?: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const knownProperty = properties.some((p) => p.address === defaultProperty);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -94,14 +96,21 @@ export function InquiryForm() {
           >
             Home of interest
           </label>
-          <select id="property" name="property" className={inputClass} defaultValue="">
+          <select
+            id="property"
+            name="property"
+            className={inputClass}
+            defaultValue={knownProperty ? defaultProperty : ""}
+          >
             <option value="" disabled>
               Select a home…
             </option>
-            <option>The Clifton Foursquare</option>
-            <option>Rocky River Bungalow</option>
-            <option>Kamm&apos;s Corners Colonial</option>
-            <option>Not sure yet / general inquiry</option>
+            {properties.map((p) => (
+              <option key={p.slug} value={p.address}>
+                {p.address} — {p.city.split(",")[0]}
+              </option>
+            ))}
+            <option value="general">Not sure yet / general inquiry</option>
           </select>
         </div>
       </div>

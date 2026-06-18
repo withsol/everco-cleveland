@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { type Property, statusStyles } from "@/lib/properties";
 
 function statusLabel(property: Property): string {
@@ -15,8 +16,9 @@ export function PropertyCard({ property }: { property: Property }) {
   const isLeased = property.status === "Leased";
 
   return (
-    <article
-      className={`group border-cream-deep bg-paper overflow-hidden rounded-2xl border transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(43,40,38,0.45)] ${
+    <Link
+      href={`/properties/${property.slug}`}
+      className={`group focus-visible:outline-copper border-cream-deep bg-paper block overflow-hidden rounded-2xl border transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(43,40,38,0.45)] focus-visible:outline-2 focus-visible:outline-offset-2 ${
         property.status === "Available"
           ? "ring-forest/30 shadow-[0_12px_30px_-22px_rgba(47,70,54,0.6)] ring-2"
           : ""
@@ -119,7 +121,14 @@ export function PropertyCard({ property }: { property: Property }) {
             )}
           </div>
         </dl>
+
+        <span className="text-copper mt-5 inline-flex items-center gap-1 text-sm font-medium">
+          View details
+          <span aria-hidden className="transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }

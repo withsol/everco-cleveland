@@ -22,8 +22,10 @@ export type Property = {
   minStay?: string;
   built?: number;
   blurb?: string;
-  /** Publicly hosted CDN photo URL. */
+  /** Primary (hero) photo — a publicly hosted CDN URL. */
   photo: string;
+  /** Additional CDN photo URLs shown in the detail-page gallery. */
+  gallery?: string[];
   communityFeatures?: string[];
 };
 
@@ -225,8 +227,18 @@ export const properties: Property[] = [
 export const statusStyles: Record<Property["status"], string> = {
   Available: "bg-forest text-paper",
   "Coming Soon": "bg-copper text-paper",
-  Leased: "bg-charcoal-soft/15 text-charcoal-soft",
+  // Solid earthy green so the label stays legible over any photo.
+  Leased: "bg-[#4A6741] text-white",
 };
+
+export function getProperty(slug: string): Property | undefined {
+  return properties.find((p) => p.slug === slug);
+}
+
+/** Hero photo first, followed by any additional gallery photos. */
+export function propertyImages(p: Property): string[] {
+  return [p.photo, ...(p.gallery ?? [])];
+}
 
 /** Sort order so on-market homes lead and leased homes trail. */
 const statusRank: Record<Property["status"], number> = {

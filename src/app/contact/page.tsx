@@ -14,7 +14,12 @@ const details = [
   { label: "Maintenance (24/7)", value: "(216) 555-0188", href: "tel:+12165550188" },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ property?: string }>;
+}) {
+  const { property } = await searchParams;
   return (
     <section className="bg-cream">
       <Container className="py-20 sm:py-28">
@@ -53,8 +58,7 @@ export default function ContactPage() {
               <div className="border-cream-deep border-t pt-6">
                 <dt className="eyebrow text-copper">Service area</dt>
                 <dd className="text-charcoal mt-2 leading-relaxed">
-                  Lakewood · Rocky River · Bay Village · Westlake · West Park ·
-                  Detroit-Shoreway
+                  Rocky River · Avon Lake · Bay Village · Strongsville
                 </dd>
               </div>
             </dl>
@@ -67,7 +71,7 @@ export default function ContactPage() {
               Fields marked with detail help us respond faster.
             </p>
             <div className="mt-8">
-              <InquiryForm />
+              <InquiryForm defaultProperty={property} />
             </div>
           </div>
         </div>
