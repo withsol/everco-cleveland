@@ -1,5 +1,6 @@
 import { Container, Eyebrow, Section, ButtonLink } from "@/components/ui";
 import { PropertyCard } from "@/components/property-card";
+import { HomeHero } from "@/components/home-hero";
 import { properties } from "@/lib/properties";
 
 const amenities = [
@@ -29,55 +30,28 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="from-cream via-paper to-cream-deep absolute inset-0 bg-gradient-to-b" />
-        <div
-          className="absolute inset-0 opacity-[0.4]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 18% 22%, rgba(176,133,66,0.18), transparent 42%), radial-gradient(circle at 82% 78%, rgba(47,70,54,0.16), transparent 45%)",
-          }}
-          aria-hidden
-        />
-        <Container className="relative py-24 sm:py-32 lg:py-40">
-          <div className="max-w-3xl">
-            <Eyebrow>West Side Cleveland · Est. 1986</Eyebrow>
-            <h1 className="text-forest mt-7 text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
-              Homes worth
-              <br />
-              <span className="text-copper italic">putting down roots</span> in.
-            </h1>
-            <p className="text-charcoal-soft mt-8 max-w-xl text-lg leading-relaxed">
-              The Ever Company is a family-run collection of beautifully renovated
-              rental homes across Cleveland&apos;s western suburbs. Character-rich
-              houses, modern comforts, and a landlord who actually answers the
-              phone.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <ButtonLink href="/properties">Browse available homes</ButtonLink>
-              <ButtonLink href="/about" variant="outline">
-                Meet the family
-              </ButtonLink>
-            </div>
+      {/* Hero — rotating full-bleed property carousel */}
+      <HomeHero />
 
-            <dl className="border-cream-deep mt-16 grid max-w-lg grid-cols-3 gap-8 border-t pt-8">
-              {[
-                { figure: "38", label: "Years on the west side" },
-                { figure: "60+", label: "Homes renovated" },
-                { figure: "4.9", label: "Average resident rating" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="text-forest font-serif text-4xl">
-                    {stat.figure}
-                  </dt>
-                  <dd className="text-charcoal-soft mt-2 text-sm leading-snug">
-                    {stat.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+      {/* Stats strip */}
+      <section className="bg-cream border-cream-deep border-b">
+        <Container className="py-12">
+          <dl className="grid grid-cols-3 gap-8">
+            {[
+              { figure: "38", label: "Years on the west side" },
+              { figure: "60+", label: "Homes renovated" },
+              { figure: "4.9", label: "Average resident rating" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center sm:text-left">
+                <dt className="text-forest font-serif text-4xl">
+                  {stat.figure}
+                </dt>
+                <dd className="text-charcoal-soft mt-2 text-sm leading-snug">
+                  {stat.label}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </Container>
       </section>
 
