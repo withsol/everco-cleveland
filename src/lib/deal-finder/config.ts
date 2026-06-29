@@ -112,3 +112,6 @@ export const TO_EMAILS = (
   .map((e) => e.trim())
   .filter(Boolean);
 export const SUBJECT_PREFIX = "Ever Co Deal Sheet";
+// Replies go to a monitored Ever Co inbox, not the dealfinder sender. All 5
+// recipients are in the visible TO field, so Reply All reaches the whole group.
+export const REPLY_TO = process.env.EVER_REPLY_TO || "hello@theevercocleveland.com";

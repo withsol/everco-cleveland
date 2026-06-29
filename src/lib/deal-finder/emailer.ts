@@ -317,7 +317,9 @@ export async function sendEmail(
 
   const payload = {
     from: `${config.FROM_NAME} <${config.FROM_EMAIL}>`,
+    // All recipients in the visible TO field (not BCC) so they can Reply All.
     to: toEmails,
+    reply_to: config.REPLY_TO,
     subject,
     html,
   };
