@@ -37,8 +37,8 @@ const stats = [
     ),
   },
   {
-    title: "4.4 ★ Average Tenant Rating",
-    detail: "Across 30 satisfaction categories from tenant exit surveys.",
+    title: "4.7 ★ Average Tenant Rating",
+    detail: "Average rating from tenant exit surveys.",
     icon: (
       <svg {...iconProps} fill="currentColor">
         <path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.8l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5Z" />
