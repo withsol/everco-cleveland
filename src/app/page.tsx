@@ -3,6 +3,50 @@ import { PropertyCard } from "@/components/property-card";
 import { HomeHero } from "@/components/home-hero";
 import { properties } from "@/lib/properties";
 
+const iconProps = {
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.7,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+const stats = [
+  {
+    title: "5th Generation Clevelanders",
+    detail:
+      "Our family's roots in Cleveland go back five generations. We don't just invest here — this is home.",
+    icon: (
+      <svg {...iconProps}>
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <path d="M12 18a3.5 3.5 0 0 1-3-5 2 2 0 0 1 3 0 2 2 0 0 1 3 0 3.5 3.5 0 0 1-3 5Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "10+ Homes Renovated",
+    detail:
+      "Every home in our portfolio has been thoughtfully renovated by our family.",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+      </svg>
+    ),
+  },
+  {
+    title: "4.4 ★ Average Tenant Rating",
+    detail: "Across 30 satisfaction categories from tenant exit surveys.",
+    icon: (
+      <svg {...iconProps} fill="currentColor">
+        <path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.8l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5Z" />
+      </svg>
+    ),
+  },
+];
+
 const amenities = [
   { label: "Studs-out renovations", note: "Modern systems, original soul" },
   { label: "Pet-friendly homes", note: "Most of our houses welcome dogs" },
@@ -35,19 +79,21 @@ export default function HomePage() {
 
       {/* Stats strip */}
       <section className="bg-cream border-cream-deep border-b">
-        <Container className="py-12">
-          <dl className="grid grid-cols-3 gap-8">
-            {[
-              { figure: "38", label: "Years on the west side" },
-              { figure: "60+", label: "Homes renovated" },
-              { figure: "4.9", label: "Average resident rating" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center sm:text-left">
-                <dt className="text-forest font-serif text-4xl">
-                  {stat.figure}
+        <Container className="py-14">
+          <dl className="grid gap-10 sm:grid-cols-3 sm:gap-8">
+            {stats.map((stat) => (
+              <div key={stat.title}>
+                <span
+                  className="text-copper bg-forest/10 inline-flex h-11 w-11 items-center justify-center rounded-full"
+                  aria-hidden
+                >
+                  {stat.icon}
+                </span>
+                <dt className="text-forest mt-4 font-serif text-2xl leading-tight">
+                  {stat.title}
                 </dt>
-                <dd className="text-charcoal-soft mt-2 text-sm leading-snug">
-                  {stat.label}
+                <dd className="text-charcoal-soft mt-2 text-sm leading-relaxed">
+                  {stat.detail}
                 </dd>
               </div>
             ))}
