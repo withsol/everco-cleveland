@@ -23,10 +23,11 @@ export default function PropertiesPage() {
             </h1>
             <p className="text-charcoal-soft mt-6 max-w-xl text-lg leading-relaxed">
               Twelve homes across Rocky River, Bay Village, Avon Lake, and
-              Strongsville — mostly single-family houses, plus a furnished
-              duplex in Rocky River. Every one of them is renovated and
-              maintained by our family. We&apos;re happy to furnish any home on
-              request, and we welcome corporate and relocation inquiries.
+              Strongsville — mostly single-family houses, plus a Rocky River
+              duplex whose two units are listed separately below. Every one of
+              them is renovated and maintained by our family. We&apos;re happy
+              to furnish any home on request, and we welcome corporate and
+              relocation inquiries.
             </p>
           </div>
         </Container>

@@ -30,8 +30,8 @@ export function SiteFooter() {
           </p>
           <p className="mt-4 max-w-sm text-sm leading-relaxed">
             A family-owned collection of beautiful rental homes in the
-            Cleveland, Ohio area — furnished and unfurnished. Owned and run by
-            Kelsey and Todd Kerslake since 2023.
+            Cleveland, Ohio area — furnished and unfurnished. Owned and run
+            locally by our family since 2023.
           </p>
           <p className="text-cream/60 mt-6 text-sm">
             Rocky River · Bay Village · Avon Lake · Strongsville
