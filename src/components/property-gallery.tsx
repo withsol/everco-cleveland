@@ -2,21 +2,31 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { PhotoLightbox } from "@/components/photo-lightbox";
+import type { PropertyPhoto } from "@/lib/properties";
 
 export function PropertyGallery({
-  images,
+  photos,
   alt,
 }: {
-  images: string[];
+  photos: PropertyPhoto[];
   alt: string;
 }) {
   const [active, setActive] = useState(0);
+  // Index being viewed fullscreen, or null when the lightbox is closed.
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
-  const current = images[active] ?? images[0];
-  const hasMany = images.length > 1;
+  const current = photos[active] ?? photos[0];
+  const hasMany = photos.length > 1;
 
-  const go = (delta: number) =>
-    setActive((i) => (i + delta + images.length) % images.length);
+  const step = (delta: number) =>
+    (active + delta + photos.length) % photos.length;
+
+  /** Open fullscreen, and keep the inline gallery on whatever was last viewed. */
+  function openLightbox(index: number) {
+    setActive(index);
+    setLightboxIndex(index);
+  }
 
   function onTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
@@ -24,7 +34,7 @@ export function PropertyGallery({
   function onTouchEnd(e: React.TouchEvent) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 40) setActive(step(dx < 0 ? 1 : -1));
     touchStartX.current = null;
   }
 
@@ -35,35 +45,43 @@ export function PropertyGallery({
         onTouchStart={hasMany ? onTouchStart : undefined}
         onTouchEnd={hasMany ? onTouchEnd : undefined}
       >
-        <Image
-          src={current}
-          alt={alt}
-          fill
-          priority
-          sizes="(min-width: 1024px) 60vw, 100vw"
-          className="object-cover"
-        />
+        {/* The inline frame crops to 16:10 — clicking opens the full photo. */}
+        <button
+          type="button"
+          onClick={() => openLightbox(active)}
+          aria-label="View photo full screen"
+          className="focus-visible:outline-paper absolute inset-0 h-full w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4"
+        >
+          <Image
+            src={current.src}
+            alt={alt}
+            fill
+            preload
+            sizes="(min-width: 1024px) 60vw, 100vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </button>
 
         {hasMany && (
           <>
             <button
               type="button"
-              onClick={() => go(-1)}
-              aria-label="Previous photo"
+              onClick={() => openLightbox(step(-1))}
+              aria-label="Previous photo, full screen"
               className="bg-charcoal/40 text-paper hover:bg-charcoal/70 focus-visible:outline-paper absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-xl backdrop-blur-sm transition focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <span aria-hidden>‹</span>
             </button>
             <button
               type="button"
-              onClick={() => go(1)}
-              aria-label="Next photo"
+              onClick={() => openLightbox(step(1))}
+              aria-label="Next photo, full screen"
               className="bg-charcoal/40 text-paper hover:bg-charcoal/70 focus-visible:outline-paper absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-xl backdrop-blur-sm transition focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               <span aria-hidden>›</span>
             </button>
-            <span className="bg-charcoal/70 text-paper absolute bottom-4 right-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide">
-              {active + 1} / {images.length}
+            <span className="bg-charcoal/70 text-paper pointer-events-none absolute bottom-4 right-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide">
+              {active + 1} / {photos.length}
             </span>
           </>
         )}
@@ -71,11 +89,12 @@ export function PropertyGallery({
 
       {hasMany && (
         <div className="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-6">
-          {images.map((src, i) => (
+          {photos.map((photo, i) => (
             <button
-              key={src}
+              key={photo.src}
               type="button"
               onClick={() => setActive(i)}
+              onDoubleClick={() => openLightbox(i)}
               aria-label={`View photo ${i + 1}`}
               aria-pressed={i === active}
               className={`focus-visible:outline-copper relative aspect-[4/3] overflow-hidden rounded-xl border transition ${
@@ -85,7 +104,7 @@ export function PropertyGallery({
               } focus-visible:outline-2 focus-visible:outline-offset-2`}
             >
               <Image
-                src={src}
+                src={photo.src}
                 alt=""
                 fill
                 sizes="160px"
@@ -95,6 +114,17 @@ export function PropertyGallery({
           ))}
         </div>
       )}
+
+      <PhotoLightbox
+        photos={photos}
+        index={lightboxIndex}
+        alt={alt}
+        onIndexChange={(next) => {
+          setActive(next);
+          setLightboxIndex(next);
+        }}
+        onClose={() => setLightboxIndex(null)}
+      />
     </div>
   );
 }

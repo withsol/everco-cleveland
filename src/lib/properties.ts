@@ -1,5 +1,18 @@
 export type Area = "Rocky River" | "Avon Lake" | "Bay Village" | "Strongsville";
 
+/** A gallery photo with an optional caption shown beneath it in the lightbox. */
+export type PropertyPhoto = {
+  src: string;
+  /** Describes the room or detail — e.g. "Renovated kitchen with quartz counters". */
+  caption?: string;
+};
+
+/**
+ * A gallery entry. Plain URL strings stay valid, so captions can be added one
+ * photo at a time by swapping a string for `{ src, caption }`.
+ */
+export type GalleryItem = string | PropertyPhoto;
+
 export type Property = {
   slug: string;
   /** Street line, used as the card title — e.g. "165 Belmar Blvd". */
@@ -22,8 +35,10 @@ export type Property = {
   blurb?: string;
   /** Primary (hero) photo — a publicly hosted CDN URL. */
   photo: string;
-  /** Additional CDN photo URLs shown in the detail-page gallery. */
-  gallery?: string[];
+  /** Optional caption for the hero photo, shown in the lightbox. */
+  photoCaption?: string;
+  /** Additional photos for the detail-page gallery: a URL, or `{ src, caption }`. */
+  gallery?: GalleryItem[];
   communityFeatures?: string[];
 };
 
@@ -82,8 +97,12 @@ export const properties: Property[] = [
     blurb:
       "Newly refinished luxury apartment with stainless steel appliances, granite counters, and hardwood throughout. Separate dining room, kitchen peninsula, private washer/dryer, huge storage/bonus space, and a sun porch.",
     photo: "/properties/19931-westway-dr/01.jpg",
+    photoCaption: "The furnished living room, with its fireplace and deep front windows.",
     gallery: [
-      "/properties/19931-westway-dr/02.jpg",
+      {
+        src: "/properties/19931-westway-dr/02.jpg",
+        caption: "A second seating area off the living room.",
+      },
       "/properties/19931-westway-dr/03.jpg",
       "/properties/19931-westway-dr/04.jpg",
       "/properties/19931-westway-dr/05.jpg",
@@ -429,8 +448,13 @@ export function getProperty(slug: string): Property | undefined {
 }
 
 /** Hero photo first, followed by any additional gallery photos. */
-export function propertyImages(p: Property): string[] {
-  return [p.photo, ...(p.gallery ?? [])];
+export function propertyImages(p: Property): PropertyPhoto[] {
+  return [
+    { src: p.photo, caption: p.photoCaption },
+    ...(p.gallery ?? []).map((item) =>
+      typeof item === "string" ? { src: item } : item,
+    ),
+  ];
 }
 
 /** Sort order so on-market homes lead and leased homes trail. */
