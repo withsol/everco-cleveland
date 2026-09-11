@@ -15,8 +15,6 @@ export type Property = {
   beds: number;
   baths: number;
   sqft?: number;
-  /** Monthly rent in dollars — only set for homes actively on the market. */
-  rent?: number;
   furnished?: boolean;
   /** Minimum stay note for furnished units, e.g. "1-Month Minimum". */
   minStay?: string;
@@ -48,7 +46,6 @@ export const properties: Property[] = [
     beds: 2,
     baths: 1,
     sqft: 1100,
-    rent: 2950,
     furnished: true,
     minStay: "1-Month Minimum",
     blurb:
@@ -80,7 +77,6 @@ export const properties: Property[] = [
     beds: 2,
     baths: 1,
     sqft: 1100,
-    rent: 2950,
     furnished: true,
     minStay: "1-Month Minimum",
     blurb:

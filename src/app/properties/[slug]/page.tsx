@@ -139,16 +139,7 @@ export default async function PropertyDetailPage({
             {/* Right: facts + CTA */}
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div className="border-cream-deep bg-cream rounded-3xl border p-7 sm:p-8">
-                {property.rent && (
-                  <p className="text-forest font-serif text-3xl">
-                    ${property.rent.toLocaleString()}
-                    <span className="text-charcoal-soft font-sans text-base">
-                      /mo
-                    </span>
-                  </p>
-                )}
-
-                <dl className="mt-6 divide-y divide-cream-deep">
+                <dl className="divide-y divide-cream-deep">
                   {facts.map((fact) => (
                     <div
                       key={fact.label}

@@ -100,20 +100,10 @@ export function PropertyCard({ property }: { property: Property }) {
             </>
           )}
           <div className="ml-auto text-right">
-            {property.rent ? (
-              <>
-                <dt className="sr-only">Monthly rent</dt>
-                <dd className="text-forest font-serif text-lg">
-                  ${property.rent.toLocaleString()}
-                  <span className="text-charcoal-soft text-xs font-sans">/mo</span>
-                </dd>
-              </>
-            ) : (
-              <>
-                <dt className="sr-only">Status</dt>
-                <dd className="text-charcoal-soft text-xs">{statusLabel(property)}</dd>
-              </>
-            )}
+            <dt className="sr-only">Status</dt>
+            <dd className="text-charcoal-soft text-xs">
+              {statusLabel(property)}
+            </dd>
           </div>
         </dl>
 
