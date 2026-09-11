@@ -369,14 +369,13 @@ export const properties: Property[] = [
     city: "Strongsville, OH 44136",
     area: "Strongsville",
     type: "Single Family Contemporary",
-    status: "Coming Soon",
-    statusNote: "Renovation in Progress",
+    status: "Leased",
     beds: 4,
     baths: 3,
     sqft: 2757,
     built: 1977,
     blurb:
-      "A spacious contemporary on the water in Strongsville's Deerfield Lake neighborhood. Four bedrooms upstairs including a 17x14 primary, a first-floor office, separate living and family rooms, a wood-burning fireplace, and first-floor laundry. Brick archway entry, an attached three-car garage, and a third of an acre backing onto the lake. Renovations are underway — photos here are from before our work began.",
+      "A spacious contemporary on the water in Strongsville's Deerfield Lake neighborhood. Four bedrooms upstairs including a 17x14 primary, a first-floor office, separate living and family rooms, a wood-burning fireplace, and first-floor laundry. Brick archway entry, an attached three-car garage, and a third of an acre backing onto the lake. Photos here are from the previous listing, before our updates.",
     photo: "/properties/16461-red-rock-dr/01.jpg",
     gallery: [
       "/properties/16461-red-rock-dr/02.jpg",
