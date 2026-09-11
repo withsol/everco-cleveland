@@ -97,19 +97,17 @@ export function HomeHero() {
         <Container className="relative flex h-full flex-col justify-end pb-24 sm:justify-center sm:pb-0">
           <div className="max-w-2xl">
             <Eyebrow className="text-copper-light">
-              West Side Cleveland · Est. 1986
+              Cleveland, Ohio · Family owned since 2023
             </Eyebrow>
             <h1 className="text-cream mt-6 text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
-              Thoughtfully renovated homes
+              Your forever home,
               <br />
-              <span className="text-copper-light italic">
-                across Cleveland&apos;s west side
-              </span>
+              <span className="text-copper-light italic">for now.</span>
             </h1>
             <p className="text-cream/85 mt-6 max-w-xl text-lg leading-relaxed">
-              A family-run collection of beautifully restored rental homes —
-              character-rich houses, modern comforts, and a landlord who actually
-              answers the phone.
+              A family-owned collection of beautiful rental homes across Rocky
+              River, Bay Village, Avon Lake, and Strongsville — for families in
+              whatever transition they&apos;re in.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <ButtonLink href="/properties">Browse Properties</ButtonLink>

@@ -19,23 +19,30 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://theevercocleveland.com"),
   title: {
-    default: "The Ever Company — Premium West Side Cleveland Rentals",
+    default:
+      "The Ever Company — Rental Homes in Cleveland, Ohio",
     template: "%s · The Ever Company",
   },
   description:
-    "A family-run collection of thoughtfully renovated rental homes across Cleveland's western suburbs. Character-rich houses, modern comforts, and a landlord who actually answers the phone.",
+    "Your forever home, for now. A family-owned collection of beautiful rental homes in the Cleveland, Ohio area — Rocky River, Bay Village, Avon Lake, and Strongsville. Furnished and unfurnished homes available.",
   keywords: [
-    "Cleveland rentals",
-    "west side Cleveland apartments",
-    "Lakewood rentals",
+    "Cleveland Ohio rentals",
     "Rocky River homes for rent",
-    "family-run property management",
+    "Bay Village rentals",
+    "Avon Lake homes for rent",
+    "Strongsville rentals",
+    "Westlake Ohio rentals",
+    "furnished rentals Cleveland",
+    "corporate housing Cleveland",
+    "family-owned property management Cleveland",
   ],
   openGraph: {
-    title: "The Ever Company",
+    title: "The Ever Company — Rental Homes in Cleveland, Ohio",
     description:
-      "Thoughtfully renovated rental homes across Cleveland's western suburbs.",
+      "Your forever home, for now. Family-owned rental homes across Rocky River, Bay Village, Avon Lake, and Strongsville, Ohio.",
     type: "website",
+    locale: "en_US",
+    siteName: "The Ever Company",
   },
 };
 

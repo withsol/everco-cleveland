@@ -22,8 +22,7 @@ export function InquiryForm({ defaultProperty }: { defaultProperty?: string }) {
         <span className="text-copper font-serif text-4xl">✦</span>
         <h3 className="text-forest mt-4 text-2xl">Thank you — we&apos;ve got it.</h3>
         <p className="text-charcoal-soft mx-auto mt-3 max-w-sm">
-          A member of the family will be in touch within one business day to set
-          up your tour.
+          Kelsey or Todd will be in touch, usually within one business day.
         </p>
         <button
           type="button"
@@ -85,7 +84,7 @@ export function InquiryForm({ defaultProperty }: { defaultProperty?: string }) {
             id="phone"
             name="phone"
             type="tel"
-            placeholder="(216) 555-0142"
+            placeholder="Best number to reach you"
             className={inputClass}
           />
         </div>
@@ -105,6 +104,8 @@ export function InquiryForm({ defaultProperty }: { defaultProperty?: string }) {
             <option value="" disabled>
               Select a home…
             </option>
+            <option value="furnished">Furnished / corporate housing</option>
+            <option value="future">A future home — keep me posted</option>
             {properties.map((p) => (
               <option key={p.slug} value={p.address}>
                 {p.address} — {p.city.split(",")[0]}
@@ -126,7 +127,7 @@ export function InquiryForm({ defaultProperty }: { defaultProperty?: string }) {
           id="message"
           name="message"
           rows={5}
-          placeholder="Tell us about your timeline, who's moving in, pets, anything that helps us help you…"
+          placeholder="Tell us about your timeline, who's moving in, pets, whether you need it furnished — anything that helps us help you…"
           className={`${inputClass} resize-none`}
         />
       </div>

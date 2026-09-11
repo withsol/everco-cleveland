@@ -5,13 +5,22 @@ import { InquiryForm } from "@/components/inquiry-form";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with The Ever Company to schedule a tour or ask about a home. A real member of the family will respond within a business day.",
+    "Get in touch with The Ever Company about a rental home, furnished housing, or corporate stays in Rocky River, Bay Village, Avon Lake, and Strongsville, Ohio. Kelsey or Todd will reply personally.",
 };
 
-const details = [
-  { label: "Email", value: "hello@theevercocleveland.com", href: "mailto:hello@theevercocleveland.com" },
-  { label: "Leasing office", value: "(216) 555-0142", href: "tel:+12165550142" },
-  { label: "Maintenance (24/7)", value: "(216) 555-0188", href: "tel:+12165550188" },
+const topics = [
+  {
+    title: "Renting a home",
+    body: "Ask about a specific house, book a tour, or tell us what you're looking for.",
+  },
+  {
+    title: "Furnished & corporate stays",
+    body: "Month-to-month furnished housing, relocations, and business bookings.",
+  },
+  {
+    title: "Renting from us later",
+    body: "We're always purchasing and renovating. We'll tell you what's coming before it's listed.",
+  },
 ];
 
 export default async function ContactPage({
@@ -33,32 +42,43 @@ export default async function ContactPage({
               place.
             </h1>
             <p className="text-charcoal-soft mt-6 max-w-md text-lg leading-relaxed">
-              Tell us a little about what you&apos;re looking for and we&apos;ll
-              be in touch to schedule a private tour — usually within a business
-              day.
+              Tell us a little about what you&apos;re looking for. We&apos;re
+              Kelsey and Todd — we live locally and we read our own email, so
+              you&apos;ll be speaking with us, usually within a business day.
             </p>
 
             <dl className="mt-12 space-y-6">
-              {details.map((item) => (
-                <div
-                  key={item.label}
-                  className="border-cream-deep border-t pt-6"
-                >
-                  <dt className="eyebrow text-copper">{item.label}</dt>
-                  <dd className="mt-2">
-                    <a
-                      href={item.href}
-                      className="text-forest hover:text-copper font-serif text-2xl transition-colors"
-                    >
-                      {item.value}
-                    </a>
-                  </dd>
-                </div>
-              ))}
               <div className="border-cream-deep border-t pt-6">
-                <dt className="eyebrow text-copper">Service area</dt>
+                <dt className="eyebrow text-copper">Email</dt>
+                <dd className="mt-2">
+                  <a
+                    href="mailto:hello@theevercocleveland.com"
+                    className="text-forest hover:text-copper font-serif text-2xl break-words transition-colors"
+                  >
+                    hello@theevercocleveland.com
+                  </a>
+                </dd>
+              </div>
+              <div className="border-cream-deep border-t pt-6">
+                <dt className="eyebrow text-copper">Where we own homes</dt>
                 <dd className="text-charcoal mt-2 leading-relaxed">
-                  Rocky River · Avon Lake · Bay Village · Strongsville
+                  Rocky River · Bay Village · Avon Lake · Strongsville
+                  <span className="text-charcoal-soft mt-1 block text-sm">
+                    Expanding into Westlake
+                  </span>
+                </dd>
+              </div>
+              <div className="border-cream-deep border-t pt-6">
+                <dt className="eyebrow text-copper">What we can help with</dt>
+                <dd className="mt-4 space-y-4">
+                  {topics.map((topic) => (
+                    <div key={topic.title}>
+                      <p className="text-forest font-medium">{topic.title}</p>
+                      <p className="text-charcoal-soft mt-1 text-sm leading-relaxed">
+                        {topic.body}
+                      </p>
+                    </div>
+                  ))}
                 </dd>
               </div>
             </dl>
@@ -68,7 +88,7 @@ export default async function ContactPage({
           <div className="border-cream-deep bg-paper rounded-3xl border p-7 shadow-[0_24px_60px_-40px_rgba(43,40,38,0.5)] sm:p-10">
             <h2 className="text-forest text-2xl">Send us a note</h2>
             <p className="text-charcoal-soft mt-2 text-sm">
-              Fields marked with detail help us respond faster.
+              The more detail you give us, the faster we can help.
             </p>
             <div className="mt-8">
               <InquiryForm defaultProperty={property} />

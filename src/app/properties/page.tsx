@@ -6,7 +6,7 @@ import { properties } from "@/lib/properties";
 export const metadata: Metadata = {
   title: "Properties",
   description:
-    "Browse furnished and unfurnished rental homes from The Ever Company across Rocky River, Avon Lake, Bay Village, and Strongsville, Ohio.",
+    "Browse furnished and unfurnished rental homes from The Ever Company across Rocky River, Bay Village, Avon Lake, and Strongsville in the Cleveland, Ohio area.",
 };
 
 export default function PropertiesPage() {
@@ -22,10 +22,11 @@ export default function PropertiesPage() {
               Find your next home.
             </h1>
             <p className="text-charcoal-soft mt-6 max-w-xl text-lg leading-relaxed">
-              Every home in our portfolio has been renovated by our family and
-              maintained like it&apos;s our own. Browse the full collection
-              across Cleveland&apos;s west side, and ask us about homes coming to
-              market soon.
+              Twelve homes across Rocky River, Bay Village, Avon Lake, and
+              Strongsville — mostly single-family houses, plus a furnished
+              duplex in Rocky River. Every one of them is renovated and
+              maintained by our family. We&apos;re happy to furnish any home on
+              request, and we welcome corporate and relocation inquiries.
             </p>
           </div>
         </Container>
@@ -45,9 +46,10 @@ export default function PropertiesPage() {
               : "Every home is currently leased."}
           </h2>
           <p className="text-cream/75 mx-auto mt-4 max-w-xl text-lg">
-            We bring new homes to market regularly across Rocky River, Avon
-            Lake, Bay Village, and Strongsville. Tell us what you&apos;re looking
-            for and we&apos;ll reach out first.
+            We&apos;re always purchasing and renovating across Rocky River, Bay
+            Village, Avon Lake, and Strongsville — and we&apos;re expanding into
+            Westlake. Looking to rent in the future? Tell us what you need and
+            we&apos;ll reach out before the next home is listed.
           </p>
           <div className="mt-8 flex justify-center">
             <ButtonLink
