@@ -19,7 +19,7 @@ export default function PropertiesPage() {
           <div className="max-w-3xl">
             <Eyebrow>The collection</Eyebrow>
             <h1 className="text-forest mt-6 text-5xl sm:text-6xl">
-              Find your next home.
+              Lease your next home.
             </h1>
             <p className="text-charcoal-soft mt-6 max-w-xl text-lg leading-relaxed">
               Thirteen homes across Rocky River, Bay Village, Avon Lake, and
