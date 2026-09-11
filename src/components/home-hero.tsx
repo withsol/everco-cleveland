@@ -107,7 +107,7 @@ export function HomeHero() {
             <p className="text-cream/85 mt-6 max-w-xl text-lg leading-relaxed">
               A family-owned collection of beautiful rental homes across Rocky
               River, Bay Village, Avon Lake, and Strongsville — supporting you
-              to find a home you&apos;ll love to live in.
+              to lease a home you&apos;ll love to live in.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <ButtonLink href="/properties">Browse Properties</ButtonLink>
