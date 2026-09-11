@@ -22,7 +22,7 @@ export default function PropertiesPage() {
               Find your next home.
             </h1>
             <p className="text-charcoal-soft mt-6 max-w-xl text-lg leading-relaxed">
-              Twelve homes across Rocky River, Bay Village, Avon Lake, and
+              Thirteen homes across Rocky River, Bay Village, Avon Lake, and
               Strongsville — mostly single-family houses, plus a Rocky River
               duplex whose two units are listed separately below. Every one of
               them is renovated and maintained by our family. We&apos;re happy

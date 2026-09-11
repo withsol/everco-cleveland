@@ -9,21 +9,38 @@ export const metadata: Metadata = {
     "The Ever Company is a family-owned business founded in 2023 by a fifth-generation Cleveland family. Meet the family and team behind our rental homes in Rocky River, Bay Village, Avon Lake, and Strongsville.",
 };
 
-/**
- * Family photos for the story section. Drop the files in `public/about/` and
- * add them here — each entry renders in place of the gradient placeholder.
- */
-const familyPhotos: { src: string; alt: string }[] = [];
+type Photo = { src: string; alt: string; position?: string };
 
-/** Portrait slot at the top of the page, with a gradient fallback. */
+/** Family photos used across the story sections. */
+const kelseyAndTodd: Photo = {
+  src: "/about/kelsey-and-todd.jpg",
+  alt: "Kelsey and Todd, the couple behind The Ever Company",
+  // Tall phone portrait — bias the crop upward so both faces stay in frame.
+  position: "50% 30%",
+};
+
+const threeGenerations: Photo = {
+  src: "/about/family-three-generations.jpg",
+  alt: "Three generations of the family behind The Ever Company together",
+};
+
+const familyOnTheWater: Photo = {
+  src: "/about/family-on-the-water.jpg",
+  alt: "Kelsey and Todd with their two boys on the water",
+  position: "50% 35%",
+};
+
+/** Photo slot that falls back to a gradient block if the file is missing. */
 function PhotoSlot({
   photo,
   className,
   gradient,
+  sizes = "(min-width: 1024px) 45vw, 100vw",
 }: {
-  photo?: { src: string; alt: string };
+  photo?: Photo;
   className: string;
   gradient: string;
+  sizes?: string;
 }) {
   if (!photo) {
     return (
@@ -36,7 +53,14 @@ function PhotoSlot({
   }
   return (
     <div className={`relative overflow-hidden rounded-2xl ${className}`}>
-      <Image src={photo.src} alt={photo.alt} fill className="object-cover" />
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        sizes={sizes}
+        className="object-cover"
+        style={photo.position ? { objectPosition: photo.position } : undefined}
+      />
     </div>
   );
 }
@@ -78,9 +102,10 @@ export default function AboutPage() {
               </p>
             </div>
             <PhotoSlot
-              photo={familyPhotos[0]}
-              className="aspect-[4/5]"
+              photo={kelseyAndTodd}
+              className="aspect-[3/4]"
               gradient="linear-gradient(150deg, #3a5142 0%, #2f4636 45%, #20322a 100%)"
+              sizes="(min-width: 1024px) 38vw, 100vw"
             />
           </div>
         </Container>
@@ -91,35 +116,31 @@ export default function AboutPage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
             <PhotoSlot
-              photo={familyPhotos[1]}
-              className="aspect-[4/3]"
+              photo={threeGenerations}
+              className="aspect-square"
               gradient="linear-gradient(150deg, #c79a5e 0%, #b08542 50%, #7a5a34 100%)"
             />
-            <div>
-              <Eyebrow>The family</Eyebrow>
-              <h2 className="text-forest mt-5 text-4xl sm:text-5xl">
-                Why we started this.
-              </h2>
-              <div className="text-charcoal-soft mt-6 space-y-5 text-lg leading-relaxed">
-                <p>
-                  Our great-great-grandparents were from here. Both of our
-                  families go back five generations in the Cleveland area. We
-                  love the Great Lakes, and we wanted to invest in the city we
-                  call home.
-                </p>
-                <p>
-                  We started The Ever Company in 2023, when we wanted to shift
-                  our lives toward something more family-oriented. Building this
-                  together gave us the freedom and flexibility we were looking
-                  for — and it is genuinely a family business. Our parents are
-                  owners alongside us and help keep the whole thing running.
-                </p>
-                <p>
-                  So when you rent from us, you&apos;re renting from a family
-                  that lives here, knows these streets, and takes care of these
-                  houses the way we take care of our own.
-                </p>
-              </div>
+            <div className="text-charcoal-soft space-y-5 text-lg leading-relaxed">
+              <p>
+                Both sides of our families go back five generations in the
+                Cleveland area. We love the Great Lakes, and we wanted to invest
+                in the city we love and call home.
+              </p>
+              <p>
+                The Ever Company is a genuine family business, with our parents
+                alongside us helping keep the whole thing running. We started
+                The Ever Company in 2023 and brought our mutual experience
+                together, building a business that could support our family and
+                the community for generations. Building this together gave us
+                the freedom and flexibility we were looking for as our family
+                grew and we needed to manage special needs children and health
+                concerns.
+              </p>
+              <p>
+                So when you rent from us, you&apos;re renting from a family that
+                lives here, loves these neighborhoods, and takes care of these
+                houses the way we take care of our own.
+              </p>
             </div>
           </div>
         </Container>
@@ -161,8 +182,8 @@ export default function AboutPage() {
             </h3>
             <div className="text-cream/75 space-y-5 text-lg leading-relaxed">
               <p>
-                The Ever Company is owned by our family — our parents hold the
-                largest share and are involved in running it day to day. We
+                The Ever Company is owned by our family, with our parents
+                alongside us as owners and involved in running it day to day. We
                 combined what each of us is good at and built the company around
                 it: homes that are well run and beautifully done.
               </p>
@@ -170,8 +191,9 @@ export default function AboutPage() {
                 We also work with a small team that keeps everything moving —
                 trusted contractors and trades we&apos;ve worked with for years,
                 and an executive assistant who handles applications, processing,
-                and scheduling. So you might hear from other members of our team
-                along the way, and they&apos;ll take just as good care of you.
+                and scheduling. So you might also work with other members of our
+                team along the way, and they&apos;ll take just as good care of
+                you.
               </p>
             </div>
           </div>
@@ -203,25 +225,30 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      {/* Photo pair */}
-      {familyPhotos.length > 2 && (
-        <section className="bg-cream">
-          <Container className="py-16 sm:py-20">
-            <div className="grid gap-8 sm:grid-cols-2">
-              <PhotoSlot
-                photo={familyPhotos[2]}
-                className="aspect-[4/3]"
-                gradient="linear-gradient(150deg, #3a5142 0%, #20322a 100%)"
-              />
-              <PhotoSlot
-                photo={familyPhotos[3]}
-                className="aspect-[4/3]"
-                gradient="linear-gradient(150deg, #c79a5e 0%, #7a5a34 100%)"
-              />
-            </div>
-          </Container>
-        </section>
-      )}
+      {/* Family feature photo */}
+      <section className="bg-cream">
+        <Container className="py-16 sm:py-20">
+          <div className="grid items-center gap-10 sm:grid-cols-[1fr_1.1fr] sm:gap-14">
+            <PhotoSlot
+              photo={familyOnTheWater}
+              className="aspect-[3/4]"
+              gradient="linear-gradient(150deg, #3a5142 0%, #20322a 100%)"
+              sizes="(min-width: 640px) 42vw, 100vw"
+            />
+            <figcaption className="text-charcoal-soft text-lg leading-relaxed">
+              <span className="text-forest font-serif text-3xl leading-tight">
+                Family first — that was the whole point.
+              </span>
+              <p className="mt-5">
+                We built this company so our family could be together more, and
+                that shapes how we run it. We think it also makes us better at
+                this: we know what it takes for a house to work for a real
+                family, because we&apos;re raising ours a few streets over.
+              </p>
+            </figcaption>
+          </div>
+        </Container>
+      </section>
 
       {/* Where we are */}
       <Section className="bg-cream">
@@ -230,16 +257,16 @@ export default function AboutPage() {
             <div>
               <Eyebrow>Where we are</Eyebrow>
               <h2 className="text-forest mt-5 text-4xl sm:text-5xl">
-                Twelve homes on the west side.
+                Thirteen homes, and counting.
               </h2>
             </div>
             <div className="text-charcoal-soft space-y-5 text-lg leading-relaxed">
               <p>
-                We own twelve homes across Rocky River, Bay Village, Avon Lake,
-                and Strongsville — mostly single-family houses, plus a duplex in
-                Rocky River whose two units we keep fully furnished. We&apos;re
-                actively looking to expand into Westlake, and we have another
-                home in Strongsville in renovation right now.
+                We own thirteen homes across Rocky River, Bay Village, Avon
+                Lake, and Strongsville — mostly single-family houses, plus a
+                duplex in Rocky River whose two units we keep fully furnished.
+                Our newest is in Strongsville and in renovation right now, and
+                we&apos;re actively looking to expand into Westlake.
               </p>
               <p>
                 We&apos;re always purchasing and renovating, so if you&apos;d
