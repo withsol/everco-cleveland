@@ -163,6 +163,8 @@ export const properties: Property[] = [
     beds: 3,
     baths: 2,
     sqft: 1580,
+    blurb:
+      "A tidy bungalow on a quiet, sidewalk-lined street in Avon Lake. A wide picture window fills the living room with afternoon light, and there are three bedrooms and two full baths across 1,580 square feet. Mature trees out front, a level lawn, and an easy trip to Avon Lake's beaches and lakefront parks.",
     photo:
       "https://photos.zillowstatic.com/fp/558c384c0d97d0e8ae58de4ab8bd336b-cc_ft_960.jpg",
   },
@@ -176,6 +178,8 @@ export const properties: Property[] = [
     beds: 3,
     baths: 2,
     sqft: 1800,
+    blurb:
+      "An easy-living ranch tucked onto a quiet Strongsville street. Everything is on one floor — three bedrooms and two full baths across 1,800 square feet — with an attached two-car garage, a wide driveway with room to turn around, and tall shade trees over a generous lawn. Close to Strongsville's parks, schools, and the shops along Pearl Road.",
     photo:
       "https://photos.zillowstatic.com/fp/92ad25a7e0140677cef4cd7b58ab5ae3-cc_ft_960.jpg",
   },
@@ -252,6 +256,8 @@ export const properties: Property[] = [
     beds: 3,
     baths: 2,
     sqft: 1766,
+    blurb:
+      "A sage-green Cape Cod with a red front door and dormer windows, set back behind a deep front lawn in Bay Village. The kitchen is fully renovated — shaker cabinets with brass hardware, granite counters, a picket-tile backsplash, and new stainless appliances — and a slider opens onto the back deck and fenced yard. Three bedrooms, two full baths, wide-plank flooring throughout, and a detached garage. Cahoon Memorial Park and Huntington Beach are both minutes away.",
     photo: "/properties/514-cahoon-rd/01.jpg",
     gallery: [
       "/properties/514-cahoon-rd/02.jpg",
@@ -279,6 +285,8 @@ export const properties: Property[] = [
     status: "Leased",
     beds: 3,
     baths: 2,
+    blurb:
+      "A classic red-brick Cape Cod on one of Bay Village's shaded, tree-lined streets. The covered front porch is built for morning coffee, and inside there are three bedrooms and two full baths. Blue shutters, a fenced backyard, a detached garage, and a broad lawn under mature maples — with Bay Village schools, Huntington Beach, and the Metroparks close by.",
     photo:
       "https://photos.zillowstatic.com/fp/03f51fe48530d8d3f43f36c09bcb37c5-cc_ft_960.jpg",
   },
