@@ -265,8 +265,8 @@ export default function AboutPage() {
                 We own thirteen homes across Rocky River, Bay Village, Avon
                 Lake, and Strongsville — mostly single-family houses, plus a
                 duplex in Rocky River whose two units we keep fully furnished.
-                Our newest is in Strongsville and in renovation right now, and
-                we&apos;re actively looking to expand into Westlake.
+                Our newest is in Strongsville, and we&apos;re actively looking
+                to expand into Westlake.
               </p>
               <p>
                 We&apos;re always purchasing and renovating, so if you&apos;d
