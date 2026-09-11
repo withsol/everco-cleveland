@@ -12,9 +12,9 @@ const columns = [
   {
     title: "Residents",
     links: [
-      { href: "/tenant", label: "Tenant Portal" },
-      { href: "/tenant", label: "Maintenance Request" },
-      { href: "/contact", label: "Contact the Office" },
+      { href: "/tenant", label: "For Residents" },
+      { href: "/tenant", label: "Request Maintenance" },
+      { href: "/contact", label: "Contact Us" },
     ],
   },
 ];
@@ -25,14 +25,23 @@ export function SiteFooter() {
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 sm:px-8 md:grid-cols-[1.5fr_1fr_1fr]">
         <div>
           <p className="font-serif text-cream text-2xl">The Ever Company</p>
+          <p className="text-copper-light mt-2 font-serif text-lg italic">
+            Your forever home, for now.
+          </p>
           <p className="mt-4 max-w-sm text-sm leading-relaxed">
-            A family-run collection of thoughtfully renovated homes across
-            Cleveland&apos;s western suburbs. Three generations, one
-            neighborhood at a time.
+            A family-owned collection of beautiful rental homes in the
+            Cleveland, Ohio area — furnished and unfurnished. Owned and run by
+            Kelsey and Todd Kerslake since 2023.
           </p>
           <p className="text-cream/60 mt-6 text-sm">
-            Lakewood · Rocky River · Bay Village · West Park
+            Rocky River · Bay Village · Avon Lake · Strongsville
           </p>
+          <a
+            href="mailto:hello@theevercocleveland.com"
+            className="hover:text-cream mt-4 inline-block text-sm underline-offset-4 transition-colors hover:underline"
+          >
+            hello@theevercocleveland.com
+          </a>
         </div>
 
         {columns.map((col) => (

@@ -171,7 +171,7 @@ export default async function PropertyDetailPage({
                   </ButtonLink>
                 </div>
                 <p className="text-charcoal-soft/70 mt-3 text-center text-xs">
-                  A member of the family will respond within a business day.
+                  Kelsey or Todd will respond, usually within a business day.
                 </p>
               </div>
             </aside>

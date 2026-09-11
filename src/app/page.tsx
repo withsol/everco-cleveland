@@ -2,6 +2,7 @@ import { Container, Eyebrow, Section, ButtonLink } from "@/components/ui";
 import { PropertyCard } from "@/components/property-card";
 import { HomeHero } from "@/components/home-hero";
 import { properties } from "@/lib/properties";
+import { averageRating, featuredTestimonials } from "@/lib/testimonials";
 
 const iconProps = {
   width: 24,
@@ -16,9 +17,9 @@ const iconProps = {
 
 const stats = [
   {
-    title: "5th Generation Clevelanders",
+    title: "5th Gen Clevelanders",
     detail:
-      "Our family's roots in Cleveland go back five generations. We don't just invest here — this is home.",
+      "Both of our families have been in the Cleveland area for five generations. We don't just invest here — we live here.",
     icon: (
       <svg {...iconProps}>
         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -27,9 +28,9 @@ const stats = [
     ),
   },
   {
-    title: "10+ Homes Renovated",
+    title: "12 Homes",
     detail:
-      "Every home in our portfolio has been thoughtfully renovated by our family.",
+      "Single-family homes and one Rocky River duplex across Rocky River, Bay Village, Avon Lake, and Strongsville.",
     icon: (
       <svg {...iconProps}>
         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
@@ -37,8 +38,9 @@ const stats = [
     ),
   },
   {
-    title: "4.7 ★ Average Tenant Rating",
-    detail: "Average rating from tenant exit surveys.",
+    title: `${averageRating} ★ Rating`,
+    detail:
+      "Averaged across resident exit surveys and our public reviews on Furnished Finder and Airbnb.",
     icon: (
       <svg {...iconProps} fill="currentColor">
         <path d="M12 2.5l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.8l-5.8 3.05 1.1-6.46-4.69-4.58 6.49-.94L12 2.5Z" />
@@ -48,24 +50,21 @@ const stats = [
 ];
 
 const amenities = [
-  { label: "Studs-out renovations", note: "Modern systems, original soul" },
-  { label: "Pet-friendly homes", note: "Most of our houses welcome dogs" },
-  { label: "Online rent & requests", note: "A portal that actually works" },
-  { label: "24/7 maintenance line", note: "A real person, same day" },
-];
-
-const testimonials = [
   {
-    quote:
-      "We rented from a faceless management company for years. The Ever Company felt like the opposite — they knew our names, fixed things before we even noticed, and the house was genuinely beautiful.",
-    name: "Maren & Tom",
-    detail: "Tenants in Lakewood, 3 years",
+    label: "Renovated before you move in",
+    note: "Updated kitchens, baths, and systems — not just fresh paint",
   },
   {
-    quote:
-      "Every detail was considered, from the kitchen to the way they handled our move-in. It's clear this is a family that cares about the homes, not just the rent check.",
-    name: "Priya R.",
-    detail: "Tenant in Rocky River",
+    label: "Furnished options available",
+    note: "Our Rocky River duplex is furnished, and we'll furnish any home on request",
+  },
+  {
+    label: "You'll be speaking with us",
+    note: "Kelsey and Todd live locally — no call center, no leasing agent",
+  },
+  {
+    label: "Maintenance handled quickly",
+    note: "Email us and we'll get it sorted, usually same or next day",
   },
 ];
 
@@ -162,13 +161,13 @@ export default function HomePage() {
           <div className="mx-auto max-w-2xl text-center">
             <Eyebrow className="justify-center">From our residents</Eyebrow>
             <h2 className="text-forest mt-5 text-4xl sm:text-5xl">
-              People stay for years.
+              Homes people are glad they found.
             </h2>
           </div>
           <div className="mt-14 grid gap-8 md:grid-cols-2">
-            {testimonials.map((t) => (
+            {featuredTestimonials.map((t) => (
               <figure
-                key={t.name}
+                key={t.quote}
                 className="border-cream-deep bg-paper rounded-2xl border p-8 sm:p-10"
               >
                 <span className="text-copper font-serif text-5xl leading-none">
@@ -184,11 +183,56 @@ export default function HomePage() {
               </figure>
             ))}
           </div>
+          <div className="mt-10 text-center">
+            <ButtonLink href="/about#reviews" variant="ghost">
+              Read more resident reviews →
+            </ButtonLink>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Furnished & corporate housing */}
+      <Section className="bg-paper">
+        <Container>
+          <div className="border-cream-deep bg-cream grid gap-10 rounded-3xl border p-9 sm:p-14 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <Eyebrow>Furnished &amp; corporate housing</Eyebrow>
+              <h2 className="text-forest mt-5 text-3xl sm:text-4xl">
+                Need a furnished home in Cleveland?
+              </h2>
+              <p className="text-charcoal-soft mt-5 text-lg leading-relaxed">
+                Our Rocky River duplex is fully furnished and set up for
+                month-to-month stays — a favorite with travelling professionals,
+                families between houses, and anyone in town for a renovation.
+                We&apos;re happy to furnish any home in our portfolio on request.
+              </p>
+            </div>
+            <div className="flex flex-col justify-center">
+              <ul className="space-y-4 text-base">
+                {[
+                  "Month-to-month and short-term stays welcome",
+                  "Relocations, travel nurses, and insurance placements",
+                  "Corporate accounts and multi-month bookings",
+                  "Any home in our portfolio can be furnished on request",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="bg-copper mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" />
+                    <span className="text-charcoal">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <ButtonLink href="/contact">
+                  Ask about furnished housing
+                </ButtonLink>
+              </div>
+            </div>
+          </div>
         </Container>
       </Section>
 
       {/* CTA */}
-      <Section className="bg-paper">
+      <Section className="bg-paper pt-0">
         <Container>
           <div className="bg-forest-deep relative overflow-hidden rounded-3xl px-8 py-16 text-center sm:px-16 sm:py-20">
             <div
@@ -205,7 +249,9 @@ export default function HomePage() {
               </h2>
               <p className="text-cream/75 mx-auto mt-5 max-w-lg text-lg">
                 Tell us a little about yourself and we&apos;ll set up a private
-                tour — usually within a couple of days.
+                tour. And if nothing is open right now — reach out anyway.
+                We&apos;re always purchasing and renovating, and we&apos;ll tell
+                you what&apos;s coming before it&apos;s listed.
               </p>
               <div className="mt-9 flex flex-wrap justify-center gap-4">
                 <ButtonLink
