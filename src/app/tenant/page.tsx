@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Container, Eyebrow, ButtonLink } from "@/components/ui";
+import { Container, Eyebrow } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "For Residents",
   description:
-    "Current Ever Company residents: how to reach us, request maintenance, and ask about your lease or renewal. Email hello@theevercocleveland.com and you'll hear from Kelsey or Todd.",
+    "Current Ever Company residents: submit maintenance requests through your resident portal, and find answers on your lease, renewal, and move-out.",
 };
 
 const residentTopics = [
   {
     title: "Something needs fixing",
-    body: "Email us with a photo and a good time to come by. Todd handles most repairs himself and we get to them quickly — Ohio law gives us 30 days, but that's not how we work.",
+    body: "Submit a request through your maintenance portal and add a photo if you can. Todd handles repairs and usually responds the same day.",
   },
   {
     title: "Rent & lease questions",
@@ -35,18 +35,15 @@ export default function TenantPage() {
               residents.
             </h1>
             <p className="text-cream/75 mt-7 max-w-xl text-lg leading-relaxed">
-              We keep this simple: email us. There&apos;s no ticket queue and no
-              call center — your message goes straight to Kelsey and Todd, and
-              one of us will get back to you, usually the same day.
+              Once you sign your lease and move in, you&apos;ll be given access
+              to our maintenance portal, where you can submit requests any time.
+              Todd handles repairs and usually responds the same day.
             </p>
-            <div className="mt-10">
-              <ButtonLink
-                href="mailto:hello@theevercocleveland.com"
-                className="bg-copper hover:bg-copper-light"
-              >
-                hello@theevercocleveland.com
-              </ButtonLink>
-            </div>
+            <p className="text-cream/60 mt-6 max-w-xl leading-relaxed">
+              Haven&apos;t gotten your portal link yet? Let Todd know and
+              he&apos;ll send it right away. It&apos;s also worth checking your
+              spam folder — sometimes it lands there.
+            </p>
           </div>
         </Container>
       </section>
@@ -71,17 +68,14 @@ export default function TenantPage() {
             <div className="max-w-xl">
               <h2 className="text-forest text-2xl">Urgent repair?</h2>
               <p className="text-charcoal-soft mt-2 leading-relaxed">
-                Put &ldquo;urgent&rdquo; in the subject line and we&apos;ll
-                treat it that way. For a fire, gas leak, or medical emergency,
-                call 911 first — then let us know.
+                Mark it as urgent in your maintenance request and we&apos;ll
+                treat it that way.
+              </p>
+              <p className="text-charcoal-soft mt-3 leading-relaxed">
+                For a fire, gas leak, or medical emergency, call 911 first —
+                then let us know.
               </p>
             </div>
-            <a
-              href="mailto:hello@theevercocleveland.com?subject=Urgent"
-              className="text-forest hover:text-copper shrink-0 font-serif text-2xl transition-colors"
-            >
-              Email us →
-            </a>
           </div>
         </Container>
       </section>

@@ -6,7 +6,7 @@ import { testimonials } from "@/lib/testimonials";
 export const metadata: Metadata = {
   title: "Our Story",
   description:
-    "Kelsey and Todd Kerslake are fifth-generation Clevelanders who founded The Ever Company in 2023. Meet the family behind our rental homes in Rocky River, Bay Village, Avon Lake, and Strongsville.",
+    "The Ever Company is a family-owned business founded in 2023 by a fifth-generation Cleveland family. Meet the family and team behind our rental homes in Rocky River, Bay Village, Avon Lake, and Strongsville.",
 };
 
 /**
@@ -48,11 +48,11 @@ const values = [
   },
   {
     title: "You'll be speaking with us",
-    body: "We live here. When you email, Kelsey or Todd reads it. When something breaks, Todd usually turns up himself. There's no call center between you and the people who own the house.",
+    body: "We live here, and we run this business locally. You'll hear from Kelsey or Todd directly, and from the team who works alongside us — never a call center in another state.",
   },
   {
     title: "Invested in Cleveland",
-    body: "Both of our families have been in this area for five generations, and we love the Great Lakes. Every home we buy is one we're proud to have on the street we're raising our kids on.",
+    body: "Both of our families go back five generations in the Cleveland area. We love the Great Lakes, and we wanted to invest in the city we call home — every house we buy is one we're proud to have on the street.",
   },
 ];
 
@@ -71,9 +71,9 @@ export default function AboutPage() {
                 five generations in.
               </h1>
               <p className="text-charcoal-soft mt-7 max-w-xl text-lg leading-relaxed">
-                We&apos;re Kelsey and Todd Kerslake. The Ever Company is our
-                family business — founded in 2023, run from our kitchen table in
-                the Cleveland area, and named for the kind of home we want every
+                We&apos;re Kelsey and Todd. The Ever Company is our family
+                business — founded in 2023, owned and run locally here in the
+                Cleveland area, and named for the kind of home we want every
                 resident to have: your forever home, for now.
               </p>
             </div>
@@ -103,21 +103,21 @@ export default function AboutPage() {
               <div className="text-charcoal-soft mt-6 space-y-5 text-lg leading-relaxed">
                 <p>
                   Our great-great-grandparents were from here. Both of our
-                  families go back five generations in the Cleveland area, and
-                  neither of us has ever really wanted to leave — we love the
-                  Great Lakes, and we wanted to invest in the city we call home.
+                  families go back five generations in the Cleveland area. We
+                  love the Great Lakes, and we wanted to invest in the city we
+                  call home.
                 </p>
                 <p>
-                  In 2023 we started The Ever Company because we needed our lives
-                  to look different. Both of our kids are special needs, and
-                  building something of our own gave our family the freedom and
-                  flexibility we couldn&apos;t find anywhere else. Kelsey&apos;s
-                  parents, Greg and family, help us keep the whole thing running.
+                  We started The Ever Company in 2023, when we wanted to shift
+                  our lives toward something more family-oriented. Building this
+                  together gave us the freedom and flexibility we were looking
+                  for — and it is genuinely a family business. Our parents are
+                  owners alongside us and help keep the whole thing running.
                 </p>
                 <p>
-                  So when you rent from us, you&apos;re renting from a family. We
-                  live locally, we answer our own email, and we take care of
-                  these houses the way we take care of our own.
+                  So when you rent from us, you&apos;re renting from a family
+                  that lives here, knows these streets, and takes care of these
+                  houses the way we take care of our own.
                 </p>
               </div>
             </div>
@@ -138,28 +138,43 @@ export default function AboutPage() {
             <div>
               <h3 className="text-cream font-serif text-3xl">Todd</h3>
               <p className="text-cream/75 mt-4 text-lg leading-relaxed">
-                Todd spent his career as a Director of Supply Chain, which is a
-                formal way of saying he&apos;s very good at operations, sourcing,
-                and managing the moving parts of a project. He handles
-                renovations, vendors, and maintenance — and he&apos;s usually the
-                one who shows up when something needs fixing.
+                Todd spent his career as a Director of Supply Chain — operations,
+                sourcing, and keeping the moving parts of complex projects on
+                track. He leads renovations, vendor relationships, and
+                maintenance, and he handles repairs personally.
               </p>
             </div>
             <div>
               <h3 className="text-cream font-serif text-3xl">Kelsey</h3>
               <p className="text-cream/75 mt-4 text-lg leading-relaxed">
                 Kelsey has been an entrepreneur for 15 years. She holds an MFA in
-                graphic design, owns a design agency, and works as a business
-                coach and educator. She handles design, leasing, and the
-                resident experience — every home gets an eye for how it actually
-                feels to live in.
+                graphic design, previously owned a design agency, and works as a
+                business coach and educator. She leads design, leasing, and the
+                resident experience — every home gets a designer&apos;s eye for
+                how it actually feels to live in.
               </p>
             </div>
           </div>
-          <p className="text-cream/70 mt-14 max-w-2xl text-lg leading-relaxed">
-            We combined what we&apos;re each good at and built The Ever Company
-            around it: homes that are well run and beautifully done.
-          </p>
+          <div className="border-cream/15 mt-14 grid gap-10 border-t pt-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <h3 className="text-cream font-serif text-3xl">
+              And the team behind us
+            </h3>
+            <div className="text-cream/75 space-y-5 text-lg leading-relaxed">
+              <p>
+                The Ever Company is owned by our family — our parents hold the
+                largest share and are involved in running it day to day. We
+                combined what each of us is good at and built the company around
+                it: homes that are well run and beautifully done.
+              </p>
+              <p>
+                We also work with a small team that keeps everything moving —
+                trusted contractors and trades we&apos;ve worked with for years,
+                and an executive assistant who handles applications, processing,
+                and scheduling. So you might hear from other members of our team
+                along the way, and they&apos;ll take just as good care of you.
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
 
@@ -222,8 +237,9 @@ export default function AboutPage() {
               <p>
                 We own twelve homes across Rocky River, Bay Village, Avon Lake,
                 and Strongsville — mostly single-family houses, plus a duplex in
-                Rocky River that we keep fully furnished. We&apos;re actively
-                looking to expand into Westlake.
+                Rocky River whose two units we keep fully furnished. We&apos;re
+                actively looking to expand into Westlake, and we have another
+                home in Strongsville in renovation right now.
               </p>
               <p>
                 We&apos;re always purchasing and renovating, so if you&apos;d

@@ -64,7 +64,7 @@ const amenities = [
   },
   {
     label: "Maintenance handled quickly",
-    note: "Email us and we'll get it sorted, usually same or next day",
+    note: "Submit a request in your resident portal — usually answered same day",
   },
 ];
 

@@ -42,7 +42,7 @@ const SLIDES: Slide[] = [
   },
 ];
 
-const ROTATE_MS = 2000;
+const ROTATE_MS = 2500;
 
 export function HomeHero() {
   const [index, setIndex] = useState(0);
@@ -106,8 +106,8 @@ export function HomeHero() {
             </h1>
             <p className="text-cream/85 mt-6 max-w-xl text-lg leading-relaxed">
               A family-owned collection of beautiful rental homes across Rocky
-              River, Bay Village, Avon Lake, and Strongsville — for families in
-              whatever transition they&apos;re in.
+              River, Bay Village, Avon Lake, and Strongsville — supporting you
+              to find a home you&apos;ll love to live in.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
               <ButtonLink href="/properties">Browse Properties</ButtonLink>

@@ -50,7 +50,7 @@ export function PropertiesGrid({ properties }: { properties: Property[] }) {
       <p className="text-charcoal-soft mt-8 text-sm">
         Showing{" "}
         <span className="text-forest font-medium">{visible.length}</span>{" "}
-        {visible.length === 1 ? "home" : "homes"}
+        {visible.length === 1 ? "listing" : "listings"}
         {active !== "All homes" ? ` · ${active}` : ""}
       </p>
 
