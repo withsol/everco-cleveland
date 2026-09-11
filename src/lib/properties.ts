@@ -179,9 +179,58 @@ export const properties: Property[] = [
     baths: 2,
     sqft: 1580,
     blurb:
-      "A tidy bungalow on a quiet, sidewalk-lined street in Avon Lake. A wide picture window fills the living room with afternoon light, and there are three bedrooms and two full baths across 1,580 square feet. Mature trees out front, a level lawn, and an easy trip to Avon Lake's beaches and lakefront parks.",
-    photo:
-      "https://photos.zillowstatic.com/fp/558c384c0d97d0e8ae58de4ab8bd336b-cc_ft_960.jpg",
+      "A tidy bungalow on a quiet, sidewalk-lined street in Avon Lake. The kitchen has been renovated — white cabinets with brass hardware, stone counters, a glossy tile backsplash, a sage-green island, and stainless appliances — and a wide picture window fills the living room with light. Three bedrooms across 1,580 square feet, two on the first floor and one upstairs, plus two full baths. There's a three-seasons room off the back, a finished basement with a cedar accent wall, and a two-car garage behind the yard. Vineyard Beach and Avon Lake's lakefront parks are close by.",
+    photo: "/properties/187-sunset-rd/01.jpg",
+    photoCaption: "The front of the home.",
+    gallery: [
+      { src: "/properties/187-sunset-rd/02.jpg", caption: "The kitchen." },
+      "/properties/187-sunset-rd/03.jpg",
+      "/properties/187-sunset-rd/04.jpg",
+      {
+        src: "/properties/187-sunset-rd/05.jpg",
+        caption: "The living room, looking into the kitchen.",
+      },
+      {
+        src: "/properties/187-sunset-rd/06.jpg",
+        caption: "The first-floor full bath.",
+      },
+      {
+        src: "/properties/187-sunset-rd/07.jpg",
+        caption: "The first of two first-floor bedrooms.",
+      },
+      {
+        src: "/properties/187-sunset-rd/08.jpg",
+        caption: "The second first-floor bedroom.",
+      },
+      {
+        src: "/properties/187-sunset-rd/09.jpg",
+        caption: "The upstairs bedroom, on the north side.",
+      },
+      {
+        src: "/properties/187-sunset-rd/10.jpg",
+        caption: "The second-floor bathroom.",
+      },
+      {
+        src: "/properties/187-sunset-rd/11.jpg",
+        caption: "The second-floor vanity.",
+      },
+      {
+        src: "/properties/187-sunset-rd/12.jpg",
+        caption: "The three-seasons room.",
+      },
+      {
+        src: "/properties/187-sunset-rd/13.jpg",
+        caption: "The finished basement.",
+      },
+      {
+        src: "/properties/187-sunset-rd/14.png",
+        caption: "The finished basement, with its cedar accent wall.",
+      },
+      {
+        src: "/properties/187-sunset-rd/15.jpg",
+        caption: "The backyard and two-car garage.",
+      },
+    ],
   },
   {
     slug: "9690-brookstone-way",
