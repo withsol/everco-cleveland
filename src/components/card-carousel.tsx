@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import type { PropertyPhoto } from "@/lib/properties";
 
 const arrowBase =
   "bg-charcoal/40 text-paper hover:bg-charcoal/70 focus-visible:outline-paper absolute top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-lg opacity-0 backdrop-blur-sm transition focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 group-hover:opacity-100 max-md:opacity-100";
@@ -17,7 +18,7 @@ export function CardCarousel({
   furnishedLabel,
 }: {
   slug: string;
-  images: string[];
+  images: PropertyPhoto[];
   alt: string;
   isLeased: boolean;
   statusLabel: string;
@@ -54,7 +55,7 @@ export function CardCarousel({
       onTouchEnd={hasMany ? onTouchEnd : undefined}
     >
       <Image
-        src={current}
+        src={current.src}
         alt={alt}
         fill
         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

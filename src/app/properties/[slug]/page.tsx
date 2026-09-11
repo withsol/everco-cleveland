@@ -53,7 +53,7 @@ export default async function PropertyDetailPage({
   const property = getProperty(slug);
   if (!property) notFound();
 
-  const images = propertyImages(property);
+  const photos = propertyImages(property);
 
   const facts: { label: string; value: string }[] = [
     { label: "Bedrooms", value: `${property.beds}` },
@@ -105,7 +105,7 @@ export default async function PropertyDetailPage({
             {/* Left: gallery + description */}
             <div>
               <PropertyGallery
-                images={images}
+                photos={photos}
                 alt={`${property.address}, ${property.city}`}
               />
 
