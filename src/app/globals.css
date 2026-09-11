@@ -58,15 +58,21 @@ h4 {
 /* Fullscreen photo lightbox
    A frosted, semi-transparent scrim rather than opaque black, so the page
    stays visible behind the photo. */
-.lightbox::backdrop {
-  background: color-mix(in srgb, var(--color-cream) 68%, transparent);
-  backdrop-filter: blur(14px) saturate(115%);
-  -webkit-backdrop-filter: blur(14px) saturate(115%);
+/* The scrim is painted on a real element (.lightbox-scrim) rather than
+   ::backdrop, which several engines refuse to blur. Its colour and blur are
+   Tailwind utilities on that element; only the fade-in lives here.
+   ::backdrop gets the same warm near-black so no light band shows at the
+   edges before the element paints. */
+.lightbox-scrim {
   animation: lightbox-scrim-in 220ms ease-out;
 }
 
-/* Safari < 18 and any browser without ::backdrop blur still needs a readable
-   scrim, which the color-mix background above provides on its own. */
+.lightbox::backdrop {
+  background: rgba(26, 22, 20, 0.76);
+}
+
+/* Browsers without ::backdrop blur support still get the solid-colour scrim
+   above, which carries the contrast on its own. */
 .lightbox[open] {
   animation: lightbox-in 220ms ease-out;
 }
@@ -93,6 +99,7 @@ h4 {
 
 @media (prefers-reduced-motion: reduce) {
   .lightbox[open],
+  .lightbox-scrim,
   .lightbox::backdrop {
     animation: none;
   }

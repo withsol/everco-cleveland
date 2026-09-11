@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { PropertyPhoto } from "@/lib/properties";
 
 const navButton =
-  "bg-paper/80 text-forest hover:bg-paper border-forest/10 focus-visible:outline-forest pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border text-2xl shadow-[0_8px_24px_-12px_rgba(43,40,38,0.5)] backdrop-blur-sm transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-0";
+  "bg-paper/20 text-paper hover:bg-paper/35 border-paper/40 focus-visible:outline-paper pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border text-2xl shadow-[0_8px_24px_-10px_rgba(0,0,0,0.6)] backdrop-blur-md transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-0";
 
 export function PhotoLightbox({
   photos,
@@ -105,21 +105,30 @@ export function PhotoLightbox({
       // anything over the photo or controls is caught by the inner wrapper.
       onClick={onClose}
       aria-label={`${alt} — photo viewer`}
-      className="lightbox m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-inherit backdrop:bg-transparent"
+      className="lightbox m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-inherit"
     >
       {photo && (
-        <div
-          className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 sm:gap-6 sm:p-8"
-          onClick={(e) => e.stopPropagation()}
-          onTouchStart={hasMany ? onTouchStart : undefined}
-          onTouchEnd={hasMany ? onTouchEnd : undefined}
-        >
+        <>
+          {/* The scrim is a real element rather than ::backdrop styling, which
+              several engines refuse to blur. Clicks on it bubble to the dialog
+              and close the viewer. */}
+          <div
+            className="lightbox-scrim absolute inset-0 bg-[rgba(26,22,20,0.76)] backdrop-blur-[14px] backdrop-saturate-125"
+            aria-hidden
+          />
+
+          <div
+            className="relative flex h-full w-full flex-col items-center justify-center gap-4 p-4 sm:gap-6 sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={hasMany ? onTouchStart : undefined}
+            onTouchEnd={hasMany ? onTouchEnd : undefined}
+          >
           {/* Close */}
           <button
             type="button"
             onClick={onClose}
             aria-label="Close photo viewer"
-            className="bg-paper/80 text-forest hover:bg-paper border-forest/10 focus-visible:outline-forest absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border text-xl shadow-[0_8px_24px_-12px_rgba(43,40,38,0.5)] backdrop-blur-sm transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 sm:right-8 sm:top-8"
+            className="bg-paper/20 text-paper hover:bg-paper/35 border-paper/40 focus-visible:outline-paper absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border text-xl shadow-[0_8px_24px_-10px_rgba(0,0,0,0.6)] backdrop-blur-md transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 sm:right-8 sm:top-8"
           >
             <span aria-hidden>✕</span>
           </button>
@@ -144,7 +153,7 @@ export function PhotoLightbox({
                   aria-hidden={i !== index}
                   fill
                   sizes="100vw"
-                  className={`object-contain drop-shadow-[0_18px_48px_rgba(43,40,38,0.35)] transition-opacity duration-300 ease-out ${
+                  className={`object-contain drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] transition-opacity duration-300 ease-out ${
                     i === index ? "opacity-100" : "opacity-0"
                   }`}
                 />
@@ -155,15 +164,13 @@ export function PhotoLightbox({
                 Omitted entirely for a lone uncaptioned photo, so no empty
                 panel floats under the image. */}
             {(photo.caption || hasMany) && (
-              <figcaption className="bg-paper/75 border-forest/10 mt-4 max-w-2xl rounded-2xl border px-5 py-3 text-center backdrop-blur-sm">
+              <figcaption className="border-paper/20 mt-4 max-w-2xl rounded-2xl border bg-black/35 px-5 py-3 text-center backdrop-blur-md">
                 {photo.caption && (
-                  <p className="text-charcoal leading-relaxed">
-                    {photo.caption}
-                  </p>
+                  <p className="text-cream leading-relaxed">{photo.caption}</p>
                 )}
                 {hasMany && (
                   <p
-                    className={`text-charcoal-soft text-xs tracking-wide ${
+                    className={`text-cream/70 text-xs tracking-wide ${
                       photo.caption ? "mt-1.5" : ""
                     }`}
                   >
@@ -194,8 +201,9 @@ export function PhotoLightbox({
                 <span aria-hidden>›</span>
               </button>
             </div>
-          )}
-        </div>
+            )}
+          </div>
+        </>
       )}
     </dialog>
   );
