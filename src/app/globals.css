@@ -60,20 +60,19 @@ h4 {
    stays visible behind the photo. */
 /* The scrim is painted on a real element (.lightbox-scrim) rather than
    ::backdrop, which several engines refuse to blur. Its colour and blur are
-   Tailwind utilities on that element; only the fade-in lives here.
-   ::backdrop gets the same green so no light band shows at the edges
-   before the element paints. */
+   Tailwind utilities on that element; only the fade-in lives here. */
 .lightbox-scrim {
   animation: lightbox-scrim-in 220ms ease-out;
 }
 
+/* ::backdrop must stay fully transparent. It sits behind .lightbox-scrim, so
+   any colour here compounds with it — two layers at 0.85 alpha left the page
+   only 2% visible, which read as a solid fill. The scrim element alone owns
+   the colour. */
 .lightbox::backdrop {
-  /* Matches the .lightbox-scrim element: --color-forest-deep at 85%. */
-  background: rgba(32, 50, 42, 0.85);
+  background: transparent;
 }
 
-/* Browsers without ::backdrop blur support still get the solid-colour scrim
-   above, which carries the contrast on its own. */
 .lightbox[open] {
   animation: lightbox-in 220ms ease-out;
 }
