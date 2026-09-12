@@ -239,6 +239,21 @@ export const properties: Property[] = [
         src: "/properties/187-sunset-rd/15.jpg",
         caption: "The backyard and two-car garage.",
       },
+      {
+        src: "/properties/187-sunset-rd/16.png",
+        caption:
+          "The park above the private beach, looking out over Lake Erie.",
+      },
+      {
+        src: "/properties/187-sunset-rd/17.png",
+        caption: "The shoreline at Vineyard Beach.",
+      },
+      {
+        src: "/properties/187-sunset-rd/18.mp4",
+        caption: "A walk down to the private beach at Vineyard Beach.",
+        // Poster keeps the 37 MB clip from loading until play is pressed.
+        poster: "/properties/187-sunset-rd/17.png",
+      },
     ],
     communityFeatures: ["Private Beach Access", "Lakefront Park"],
 

@@ -37,8 +37,9 @@ export function MediaFrame({
         poster={item.poster}
         controls={controls}
         playsInline
-        // Fetch enough to paint a first frame without pulling the whole file.
-        preload="metadata"
+        // With a poster there is nothing to fetch until play is pressed. Without
+        // one we need enough of the file to paint a first frame.
+        preload={item.poster ? "none" : "metadata"}
         aria-label={item.caption ? `${alt} — ${item.caption}` : alt}
         className={`absolute inset-0 h-full w-full ${objectFit} ${className}`}
         style={style}
