@@ -113,7 +113,7 @@ export function PhotoLightbox({
               several engines refuse to blur. Clicks on it bubble to the dialog
               and close the viewer. */}
           <div
-            className="lightbox-scrim bg-forest-deep/85 absolute inset-0 backdrop-blur-[14px] backdrop-saturate-125"
+            className="lightbox-scrim absolute inset-0 bg-[rgba(32,50,42,0.85)] backdrop-blur-[14px] backdrop-saturate-125"
             aria-hidden
           />
 
