@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, Eyebrow, ButtonLink } from "@/components/ui";
 import { PropertiesGrid } from "@/components/properties-grid";
-import { properties } from "@/lib/properties";
+import { isOnMarket, properties } from "@/lib/properties";
 
 export const metadata: Metadata = {
   title: "Properties",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function PropertiesPage() {
-  const available = properties.filter((p) => p.status !== "Leased").length;
+  const available = properties.filter(isOnMarket).length;
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { Container, Eyebrow, Section, ButtonLink } from "@/components/ui";
 import { PropertyCard } from "@/components/property-card";
 import { HomeHero } from "@/components/home-hero";
-import { properties } from "@/lib/properties";
+import { isOnMarket, properties, sortByAvailability } from "@/lib/properties";
 import { averageRating, featuredTestimonials } from "@/lib/testimonials";
 
 const iconProps = {
@@ -69,7 +69,9 @@ const amenities = [
 ];
 
 export default function HomePage() {
-  const featured = properties.filter((p) => p.status !== "Leased").slice(0, 3);
+  // Includes a leased home with a known availability date — that is still
+  // something a visitor can act on.
+  const featured = sortByAvailability(properties.filter(isOnMarket)).slice(0, 3);
 
   return (
     <>
