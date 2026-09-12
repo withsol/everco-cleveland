@@ -7,6 +7,7 @@ import {
   getProperty,
   properties,
   propertyMedia,
+  statusLabel,
   statusStyles,
 } from "@/lib/properties";
 
@@ -32,16 +33,6 @@ export async function generateMetadata({
       }.`,
     openGraph: { images: [property.photo] },
   };
-}
-
-function statusLabel(property: NonNullable<ReturnType<typeof getProperty>>) {
-  if (property.status === "Leased") return "Currently Leased";
-  if (property.status === "Coming Soon") {
-    return property.statusNote
-      ? `Coming Soon — ${property.statusNote}`
-      : "Coming Soon";
-  }
-  return property.statusNote ? `Available ${property.statusNote}` : "Available";
 }
 
 export default async function PropertyDetailPage({

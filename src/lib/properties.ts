@@ -96,8 +96,8 @@ export const properties: Property[] = [
     city: "Rocky River, OH 44116",
     area: "Rocky River",
     type: "Luxury Furnished Apartment",
-    status: "Available",
-    statusNote: "Now",
+    status: "Leased",
+    statusNote: "Available November 1st",
     beds: 2,
     baths: 1,
     sqft: 1100,
@@ -634,13 +634,51 @@ export function propertyMedia(p: Property): PropertyMedia[] {
   ];
 }
 
-/** Sort order so on-market homes lead and leased homes trail. */
+/**
+ * Human label for a property's status. Lives here rather than in the card and
+ * the detail page, which each had their own copy — and both silently dropped
+ * `statusNote` for a leased home, so an upcoming availability date could not
+ * be shown.
+ */
+export function statusLabel(property: Property): string {
+  if (property.status === "Leased") {
+    return property.statusNote
+      ? `Currently Leased — ${property.statusNote}`
+      : "Currently Leased";
+  }
+  if (property.status === "Coming Soon") {
+    return property.statusNote
+      ? `Coming Soon — ${property.statusNote}`
+      : "Coming Soon";
+  }
+  return property.statusNote ? `Available ${property.statusNote}` : "Available";
+}
+
+/**
+ * Sort order so on-market homes lead and leased homes trail. A leased home
+ * with a `statusNote` has a known availability date, so it ranks above the
+ * fully-leased homes rather than being buried beneath them.
+ */
 const statusRank: Record<Property["status"], number> = {
   Available: 0,
   "Coming Soon": 1,
-  Leased: 2,
+  Leased: 3,
 };
 
+/**
+ * A home someone can actually lease: on the market now, coming soon, or
+ * leased with a known availability date. Only a home that is leased with no
+ * date attached is off the market.
+ */
+export function isOnMarket(p: Property): boolean {
+  return p.status !== "Leased" || Boolean(p.statusNote);
+}
+
+function rankOf(p: Property): number {
+  if (p.status === "Leased" && p.statusNote) return 2;
+  return statusRank[p.status];
+}
+
 export function sortByAvailability(list: Property[]): Property[] {
-  return [...list].sort((a, b) => statusRank[a.status] - statusRank[b.status]);
+  return [...list].sort((a, b) => rankOf(a) - rankOf(b));
 }

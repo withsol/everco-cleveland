@@ -4,18 +4,9 @@ import {
   isVideo,
   type Property,
   propertyMedia,
+  statusLabel,
   statusStyles,
 } from "@/lib/properties";
-
-function statusLabel(property: Property): string {
-  if (property.status === "Leased") return "Currently Leased";
-  if (property.status === "Coming Soon") {
-    return property.statusNote
-      ? `Coming Soon — ${property.statusNote}`
-      : "Coming Soon";
-  }
-  return property.statusNote ? `Available ${property.statusNote}` : "Available";
-}
 
 export function PropertyCard({ property }: { property: Property }) {
   const isLeased = property.status === "Leased";
