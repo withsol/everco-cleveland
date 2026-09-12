@@ -1,20 +1,20 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import type { PropertyPhoto } from "@/lib/properties";
+import { MediaFrame } from "@/components/property-media";
+import { isVideo, type PropertyMedia } from "@/lib/properties";
 
 const navButton =
   "bg-paper/20 text-paper hover:bg-paper/35 border-paper/40 focus-visible:outline-paper pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border text-2xl shadow-[0_8px_24px_-10px_rgba(0,0,0,0.6)] backdrop-blur-md transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-0";
 
 export function PhotoLightbox({
-  photos,
+  media,
   index,
   alt,
   onIndexChange,
   onClose,
 }: {
-  photos: PropertyPhoto[];
+  media: PropertyMedia[];
   /** Index of the photo to show, or null when the lightbox is closed. */
   index: number | null;
   alt: string;
@@ -24,14 +24,14 @@ export function PhotoLightbox({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const touchStartX = useRef<number | null>(null);
   const open = index !== null;
-  const hasMany = photos.length > 1;
+  const hasMany = media.length > 1;
 
   const go = useCallback(
     (delta: number) => {
       if (index === null) return;
-      onIndexChange((index + delta + photos.length) % photos.length);
+      onIndexChange((index + delta + media.length) % media.length);
     },
-    [index, photos.length, onIndexChange],
+    [index, media.length, onIndexChange],
   );
 
   // Drive the native dialog so we inherit its focus trap and top-layer stacking.
@@ -84,17 +84,17 @@ export function PhotoLightbox({
     touchStartX.current = null;
   }
 
-  const photo = index === null ? undefined : photos[index];
+  const item = index === null ? undefined : media[index];
 
   /** Current photo plus its neighbours, deduped for short galleries. */
   const neighbourhood = useMemo(() => {
     if (index === null) return [];
     const seen = new Set<number>();
     for (const delta of [0, 1, -1]) {
-      seen.add((index + delta + photos.length) % photos.length);
+      seen.add((index + delta + media.length) % media.length);
     }
     return [...seen];
-  }, [index, photos.length]);
+  }, [index, media.length]);
 
   return (
     <dialog
@@ -107,7 +107,7 @@ export function PhotoLightbox({
       aria-label={`${alt} — photo viewer`}
       className="lightbox m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-inherit"
     >
-      {photo && (
+      {item && (
         <>
           {/* The scrim is a real element rather than ::backdrop styling, which
               several engines refuse to blur. Clicks on it bubble to the dialog
@@ -120,8 +120,8 @@ export function PhotoLightbox({
           <div
             className="relative flex h-full w-full flex-col items-center justify-center gap-4 p-4 sm:gap-6 sm:p-8"
             onClick={(e) => e.stopPropagation()}
-            onTouchStart={hasMany ? onTouchStart : undefined}
-            onTouchEnd={hasMany ? onTouchEnd : undefined}
+            onTouchStart={hasMany && !isVideo(item.src) ? onTouchStart : undefined}
+            onTouchEnd={hasMany && !isVideo(item.src) ? onTouchEnd : undefined}
           >
           {/* Close */}
           <button
@@ -139,42 +139,50 @@ export function PhotoLightbox({
               {/* The current photo plus its two neighbours stay mounted, so
                   stepping through crossfades between already-decoded images
                   instead of blanking the frame while the next one loads. */}
-              {neighbourhood.map((i) => (
-                <Image
-                  key={photos[i].src}
-                  src={photos[i].src}
-                  alt={
-                    i === index
-                      ? photos[i].caption
-                        ? `${alt} — ${photos[i].caption}`
-                        : alt
-                      : ""
-                  }
-                  aria-hidden={i !== index}
-                  fill
-                  sizes="100vw"
-                  className={`object-contain drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] transition-opacity duration-300 ease-out ${
-                    i === index ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              ))}
+              {neighbourhood.map((i) =>
+                // Only the visible item mounts if it is a video: a hidden
+                // player would keep buffering behind the photo on screen.
+                isVideo(media[i].src) && i !== index ? null : (
+                  <div
+                    key={media[i].src}
+                    className={`absolute inset-0 transition-opacity duration-300 ease-out ${
+                      i === index ? "opacity-100" : "opacity-0"
+                    }`}
+                    aria-hidden={i !== index}
+                  >
+                    <MediaFrame
+                      item={media[i]}
+                      alt={
+                        i === index
+                          ? media[i].caption
+                            ? `${alt} — ${media[i].caption}`
+                            : alt
+                          : ""
+                      }
+                      sizes="100vw"
+                      fit="contain"
+                      className="drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)]"
+                    />
+                  </div>
+                ),
+              )}
             </div>
 
             {/* Caption area — holds the counter, plus a caption when one is set.
                 Omitted entirely for a lone uncaptioned photo, so no empty
                 panel floats under the image. */}
-            {(photo.caption || hasMany) && (
+            {(item.caption || hasMany) && (
               <figcaption className="border-paper/20 mt-4 max-w-2xl rounded-2xl border bg-black/35 px-5 py-3 text-center backdrop-blur-md">
-                {photo.caption && (
-                  <p className="text-cream leading-relaxed">{photo.caption}</p>
+                {item.caption && (
+                  <p className="text-cream leading-relaxed">{item.caption}</p>
                 )}
                 {hasMany && (
                   <p
                     className={`text-cream/70 text-xs tracking-wide ${
-                      photo.caption ? "mt-1.5" : ""
+                      item.caption ? "mt-1.5" : ""
                     }`}
                   >
-                    {index! + 1} of {photos.length}
+                    {index! + 1} of {media.length}
                   </p>
                 )}
               </figcaption>

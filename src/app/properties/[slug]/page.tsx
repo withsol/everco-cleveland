@@ -6,7 +6,7 @@ import { PropertyGallery } from "@/components/property-gallery";
 import {
   getProperty,
   properties,
-  propertyImages,
+  propertyMedia,
   statusStyles,
 } from "@/lib/properties";
 
@@ -53,7 +53,7 @@ export default async function PropertyDetailPage({
   const property = getProperty(slug);
   if (!property) notFound();
 
-  const photos = propertyImages(property);
+  const media = propertyMedia(property);
 
   const facts: { label: string; value: string }[] = [
     { label: "Bedrooms", value: `${property.beds}` },
@@ -105,7 +105,7 @@ export default async function PropertyDetailPage({
             {/* Left: gallery + description */}
             <div>
               <PropertyGallery
-                photos={photos}
+                media={media}
                 alt={`${property.address}, ${property.city}`}
               />
 

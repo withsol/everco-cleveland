@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { CardCarousel } from "@/components/card-carousel";
-import { type Property, propertyImages, statusStyles } from "@/lib/properties";
+import {
+  isVideo,
+  type Property,
+  propertyMedia,
+  statusStyles,
+} from "@/lib/properties";
 
 function statusLabel(property: Property): string {
   if (property.status === "Leased") return "Currently Leased";
@@ -25,7 +30,7 @@ export function PropertyCard({ property }: { property: Property }) {
     >
       <CardCarousel
         slug={property.slug}
-        images={propertyImages(property)}
+        images={propertyMedia(property).filter((m) => !isVideo(m.src))}
         alt={`${property.address}, ${property.city}`}
         isLeased={isLeased}
         statusLabel={statusLabel(property)}
