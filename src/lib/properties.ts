@@ -269,9 +269,17 @@ export const properties: Property[] = [
     baths: 2,
     sqft: 1800,
     blurb:
-      "An easy-living ranch tucked onto a quiet Strongsville street. Everything is on one floor — three bedrooms and two full baths across 1,800 square feet — with an attached two-car garage, a wide driveway with room to turn around, and tall shade trees over a generous lawn. Close to Strongsville's parks, schools, and the shops along Pearl Road.",
+      "An easy-living ranch tucked onto a quiet Strongsville street. Everything is on one floor — three bedrooms and two full baths across 1,800 square feet — with an attached two-car garage, a wide driveway with room to turn around, and tall shade trees over a generous lawn. The home sits in the Meadowood Association, so residents get the community amenities on Gate Post Road: an Olympic-size pool and a wading pool with a spray fountain, a clubhouse, a playground, courts lined for tennis and pickleball, and a basketball court. Close to Strongsville's parks, schools, and the shops along Pearl Road.",
     photo:
       "https://photos.zillowstatic.com/fp/92ad25a7e0140677cef4cd7b58ab5ae3-cc_ft_960.jpg",
+    communityFeatures: [
+      "Pool",
+      "Wading Pool",
+      "Clubhouse",
+      "Playground",
+      "Tennis & Pickleball",
+      "Basketball Court",
+    ],
   },
   {
     slug: "17016-lanier-ave",
