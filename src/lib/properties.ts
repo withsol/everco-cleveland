@@ -1,17 +1,26 @@
 export type Area = "Rocky River" | "Avon Lake" | "Bay Village" | "Strongsville";
 
-/** A gallery photo with an optional caption shown beneath it in the lightbox. */
-export type PropertyPhoto = {
+/** A gallery item — a photo or a video — with an optional caption. */
+export type PropertyMedia = {
   src: string;
   /** Describes the room or detail — e.g. "Renovated kitchen with quartz counters". */
   caption?: string;
+  /** Poster frame for a video, shown before it plays. */
+  poster?: string;
 };
 
 /**
  * A gallery entry. Plain URL strings stay valid, so captions can be added one
- * photo at a time by swapping a string for `{ src, caption }`.
+ * item at a time by swapping a string for `{ src, caption }`.
  */
-export type GalleryItem = string | PropertyPhoto;
+export type GalleryItem = string | PropertyMedia;
+
+const VIDEO_EXTENSIONS = /\.(mp4|mov|m4v|webm|ogv)$/i;
+
+/** True when a gallery item should render as a video player rather than an image. */
+export function isVideo(src: string): boolean {
+  return VIDEO_EXTENSIONS.test(src);
+}
 
 export type Property = {
   slug: string;
@@ -179,7 +188,7 @@ export const properties: Property[] = [
     baths: 2,
     sqft: 1580,
     blurb:
-      "A tidy bungalow on a quiet, sidewalk-lined street in Avon Lake. The kitchen has been renovated — white cabinets with brass hardware, stone counters, a glossy tile backsplash, a sage-green island, and stainless appliances — and a wide picture window fills the living room with light. Three bedrooms across 1,580 square feet, two on the first floor and one upstairs, plus two full baths. There's a three-seasons room off the back, a finished basement with a cedar accent wall, and a two-car garage behind the yard. Vineyard Beach and Avon Lake's lakefront parks are close by.",
+      "A tidy bungalow on a quiet, sidewalk-lined street in Avon Lake. The kitchen has been renovated — white cabinets with brass hardware, stone counters, a glossy tile backsplash, a sage-green island, and stainless appliances — and a wide picture window fills the living room with light. Three bedrooms across 1,580 square feet, two on the first floor and one upstairs, plus two full baths. There's a three-seasons room off the back, a finished basement with a cedar accent wall, and a two-car garage behind the yard. Best of all, residents have access to Vineyard Beach — a members-only private beach with a park above it and stairs leading down to the Lake Erie shoreline.",
     photo: "/properties/187-sunset-rd/01.jpg",
     photoCaption: "The front of the home.",
     gallery: [
@@ -231,6 +240,8 @@ export const properties: Property[] = [
         caption: "The backyard and two-car garage.",
       },
     ],
+    communityFeatures: ["Private Beach Access", "Lakefront Park"],
+
   },
   {
     slug: "9690-brookstone-way",
@@ -496,8 +507,8 @@ export function getProperty(slug: string): Property | undefined {
   return properties.find((p) => p.slug === slug);
 }
 
-/** Hero photo first, followed by any additional gallery photos. */
-export function propertyImages(p: Property): PropertyPhoto[] {
+/** Hero photo first, followed by any additional gallery photos and videos. */
+export function propertyMedia(p: Property): PropertyMedia[] {
   return [
     { src: p.photo, caption: p.photoCaption },
     ...(p.gallery ?? []).map((item) =>

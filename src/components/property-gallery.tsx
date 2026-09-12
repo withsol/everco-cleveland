@@ -3,24 +3,25 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { PhotoLightbox } from "@/components/photo-lightbox";
-import type { PropertyPhoto } from "@/lib/properties";
+import { MediaFrame, PlayBadge } from "@/components/property-media";
+import { isVideo, type PropertyMedia } from "@/lib/properties";
 
 export function PropertyGallery({
-  photos,
+  media,
   alt,
 }: {
-  photos: PropertyPhoto[];
+  media: PropertyMedia[];
   alt: string;
 }) {
   const [active, setActive] = useState(0);
   // Index being viewed fullscreen, or null when the lightbox is closed.
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
-  const current = photos[active] ?? photos[0];
-  const hasMany = photos.length > 1;
+  const current = media[active] ?? media[0];
+  const hasMany = media.length > 1;
 
   const step = (delta: number) =>
-    (active + delta + photos.length) % photos.length;
+    (active + delta + media.length) % media.length;
 
   /** Open fullscreen, and keep the inline gallery on whatever was last viewed. */
   function openLightbox(index: number) {
@@ -45,22 +46,32 @@ export function PropertyGallery({
         onTouchStart={hasMany ? onTouchStart : undefined}
         onTouchEnd={hasMany ? onTouchEnd : undefined}
       >
-        {/* The inline frame crops to 16:10 — clicking opens the full photo. */}
-        <button
-          type="button"
-          onClick={() => openLightbox(active)}
-          aria-label="View photo full screen"
-          className="focus-visible:outline-paper absolute inset-0 h-full w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4"
-        >
-          <Image
-            src={current.src}
+        {/* A video plays in place; a photo opens full screen, since the inline
+            frame crops it to 16:10. */}
+        {isVideo(current.src) ? (
+          <MediaFrame
+            item={current}
             alt={alt}
-            fill
-            preload
             sizes="(min-width: 1024px) 60vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            fit="contain"
+            className="bg-charcoal"
           />
-        </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => openLightbox(active)}
+            aria-label="View photo full screen"
+            className="focus-visible:outline-paper absolute inset-0 h-full w-full cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4"
+          >
+            <MediaFrame
+              item={current}
+              alt={alt}
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              preload
+              className="transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </button>
+        )}
 
         {hasMany && (
           <>
@@ -81,7 +92,7 @@ export function PropertyGallery({
               <span aria-hidden>›</span>
             </button>
             <span className="bg-charcoal/70 text-paper pointer-events-none absolute bottom-4 right-4 rounded-full px-3 py-1 text-xs font-medium tracking-wide">
-              {active + 1} / {photos.length}
+              {active + 1} / {media.length}
             </span>
           </>
         )}
@@ -89,9 +100,9 @@ export function PropertyGallery({
 
       {hasMany && (
         <div className="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-6">
-          {photos.map((photo, i) => (
+          {media.map((item, i) => (
             <button
-              key={photo.src}
+              key={item.src}
               type="button"
               onClick={() => setActive(i)}
               onDoubleClick={() => openLightbox(i)}
@@ -103,20 +114,43 @@ export function PropertyGallery({
                   : "border-cream-deep opacity-80 hover:opacity-100"
               } focus-visible:outline-2 focus-visible:outline-offset-2`}
             >
-              <Image
-                src={photo.src}
-                alt=""
-                fill
-                sizes="160px"
-                className="object-cover"
-              />
+              {isVideo(item.src) ? (
+                <>
+                  {item.poster ? (
+                    <Image
+                      src={item.poster}
+                      alt=""
+                      fill
+                      sizes="160px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <video
+                      src={item.src}
+                      preload="metadata"
+                      muted
+                      playsInline
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  )}
+                  <PlayBadge small />
+                </>
+              ) : (
+                <Image
+                  src={item.src}
+                  alt=""
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                />
+              )}
             </button>
           ))}
         </div>
       )}
 
       <PhotoLightbox
-        photos={photos}
+        media={media}
         index={lightboxIndex}
         alt={alt}
         onIndexChange={(next) => {
