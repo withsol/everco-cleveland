@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .claude/launch.json
+
+# Google Street View capture kept locally for reference — not ours to publish
+public/properties/187-sunset-rd/11- beach access to Vineyard Beach in Avon Lake.png
