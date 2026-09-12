@@ -106,7 +106,8 @@ export const properties: Property[] = [
     blurb:
       "Newly refinished luxury apartment with stainless steel appliances, granite counters, and hardwood throughout. Separate dining room, kitchen peninsula, private washer/dryer, huge storage/bonus space, and a sun porch.",
     photo: "/properties/19931-westway-dr/01.jpg",
-    photoCaption: "The furnished living room, with its fireplace and deep front windows.",
+    photoCaption:
+      "The furnished living room, with its fireplace and deep front windows.",
     gallery: [
       {
         src: "/properties/19931-westway-dr/02.jpg",
@@ -256,7 +257,6 @@ export const properties: Property[] = [
       },
     ],
     communityFeatures: ["Private Beach Access", "Lakefront Park"],
-
   },
   {
     slug: "9690-brookstone-way",
@@ -384,9 +384,103 @@ export const properties: Property[] = [
     beds: 3,
     baths: 2,
     blurb:
-      "A classic red-brick Cape Cod on one of Bay Village's shaded, tree-lined streets. The covered front porch is built for morning coffee, and inside there are three bedrooms and two full baths. Blue shutters, a fenced backyard, a detached garage, and a broad lawn under mature maples — with Bay Village schools, Huntington Beach, and the Metroparks close by.",
-    photo:
-      "https://photos.zillowstatic.com/fp/03f51fe48530d8d3f43f36c09bcb37c5-cc_ft_960.jpg",
+      "A classic red-brick Cape Cod on one of Bay Village's shaded, tree-lined streets, with a covered front porch built for morning coffee. The kitchen has been fully renovated — sage-green cabinetry with brass hardware, quartz counters, a vertical tile backsplash, stainless appliances, a peninsula with seating, and a marble checkerboard floor. Refinished hardwood runs through the living and dining rooms, joined by an arched doorway, and both full baths have been redone: one in sage with a marble vanity and basketweave tile, the other tucked under the eaves with a fluted vanity and herringbone floor. Three bedrooms, a finished room upstairs under the eaves, and a finished lower level with laundry. Blue shutters, a fenced backyard, a detached garage, and a broad lawn under mature maples — with Bay Village schools, Huntington Beach, and the Metroparks close by.",
+    photo: "/properties/526-huntmere-dr/01.jpg",
+    photoCaption:
+      "The front of the home, with its covered porch and drive to the garage.",
+    gallery: [
+      {
+        src: "/properties/526-huntmere-dr/02.jpg",
+        caption: "The renovated kitchen, from the living room.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/03.jpg",
+        caption: "Sage cabinetry, quartz counters, and stainless appliances.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/04.jpg",
+        caption: "The peninsula seating and marble checkerboard floor.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/05.jpg",
+        caption:
+          "The sink runs under a window, with full-height pantry cabinets opposite.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/06.jpg",
+        caption: "The living room, with refinished hardwood throughout.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/07.jpg",
+        caption:
+          "The living room, digitally furnished to show one way the space can be laid out.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/08.jpg",
+        caption: "The dining room, through the arched doorway.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/09.jpg",
+        caption: "Built-in shelving and a peg rail at the stair landing.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/10.jpg",
+        caption: "The hallway, with closets and stairs to the upper floor.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/11.jpg",
+        caption: "A bedroom with refinished hardwood.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/12.jpg",
+        caption: "A second bedroom, facing the back of the lot.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/13.jpg",
+        caption: "A third bedroom.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/14.jpg",
+        caption: "The finished room upstairs, under the eaves.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/15.jpg",
+        caption: "The upstairs landing.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/16.jpg",
+        caption:
+          "The full bath, with a marble vanity and basketweave tile floor.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/17.jpg",
+        caption: "The same bath, looking out to the hallway.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/18.jpg",
+        caption: "The second bath, tucked under the eaves.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/19.jpg",
+        caption: "Its fluted vanity and herringbone tile floor.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/20.jpg",
+        caption: "A finished room in the lower level.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/21.jpg",
+        caption: "Another lower-level room, with a closet.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/22.jpg",
+        caption: "A third finished space downstairs.",
+      },
+      {
+        src: "/properties/526-huntmere-dr/23.jpg",
+        caption: "The laundry room, with washer and dryer and a utility sink.",
+      },
+    ],
   },
   {
     slug: "165-belmar-blvd",
@@ -506,7 +600,7 @@ export const properties: Property[] = [
       "/properties/16461-red-rock-dr/21.jpg",
       "/properties/16461-red-rock-dr/22.jpg",
       "/properties/16461-red-rock-dr/23.jpg",
-      "/properties/16461-red-rock-dr/24.jpg"
+      "/properties/16461-red-rock-dr/24.jpg",
     ],
     communityFeatures: [
       "Lakefront",
