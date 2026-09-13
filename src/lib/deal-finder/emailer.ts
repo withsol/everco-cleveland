@@ -309,19 +309,26 @@ export function buildHtml(report: Report): string {
 export async function sendEmail(
   html: string,
   subject: string,
-  opts: { apiKey?: string; toEmails?: string[] } = {},
+  opts: {
+    apiKey?: string;
+    toEmails?: string[];
+    fromName?: string;
+    replyTo?: string;
+    text?: string;
+  } = {},
 ): Promise<unknown> {
   const toEmails = opts.toEmails || config.TO_EMAILS;
   const apiKey = opts.apiKey || process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error("RESEND_API_KEY not set (env var or pass apiKey).");
 
   const payload = {
-    from: `${config.FROM_NAME} <${config.FROM_EMAIL}>`,
+    from: `${opts.fromName || config.FROM_NAME} <${config.FROM_EMAIL}>`,
     // All recipients in the visible TO field (not BCC) so they can Reply All.
     to: toEmails,
-    reply_to: config.REPLY_TO,
+    reply_to: opts.replyTo || config.REPLY_TO,
     subject,
     html,
+    ...(opts.text ? { text: opts.text } : {}),
   };
 
   const resp = await fetch("https://api.resend.com/emails", {
