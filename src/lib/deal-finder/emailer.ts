@@ -20,6 +20,7 @@ const AMBER_BG = "#fef3c7";
 const RED = "#dc2626";
 const CARD_BG = "#ffffff";
 const PAGE_BG = "#f4f6f7";
+const PURPLE = "#6d28d9";
 
 const money = (n: number): string =>
   "$" + Math.round(n).toLocaleString("en-US");
@@ -29,10 +30,20 @@ const pct = (x: number): string => (x * 100).toFixed(2) + "%";
 function badges(deal: Listing): string {
   const out: [string, string, string][] = [];
   if (deal.is_new) out.push(["NEW", "#fff", TEAL]);
+  if (deal.dom_milestone) {
+    out.push([`⏱ STILL ON THE MARKET: ${deal.days_on_market} DAYS`, "#fff", PURPLE]);
+  }
   if (deal.price_change) {
     const pc = deal.price_change;
     if (pc < 0) out.push([`PRICE ↓ ${money(Math.abs(pc))}`, "#fff", RED]);
     else if (pc > 0) out.push([`PRICE ↑ ${money(pc)}`, "#fff", AMBER]);
+  }
+  // On a re-alert, also show the total move since we first saw it (when that
+  // differs from today's change).
+  const since = deal.price_change_since_first || 0;
+  if (deal.dom_milestone && since && since !== deal.price_change) {
+    if (since < 0) out.push([`↓ ${money(Math.abs(since))} SINCE FIRST SEEN`, RED, "#fee2e2"]);
+    else out.push([`↑ ${money(since)} SINCE FIRST SEEN`, AMBER, AMBER_BG]);
   }
   if (deal.is_multifamily) out.push(["MULTI-FAMILY", INK, "#e8edef"]);
   const label = deal.garage_label;
@@ -146,7 +157,7 @@ function dealCard(deal: Listing, rank: number): string {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
             ${photoCell}
             <td style="vertical-align:top;">
-              <div style="font-size:12px;color:${TEAL};font-weight:700;letter-spacing:.5px;">#${rank} · ${deal.town.toUpperCase()} · ${deal.zip}</div>
+              <div style="font-size:12px;color:${TEAL};font-weight:700;letter-spacing:.5px;">#${rank} · ${deal.town.toUpperCase()} SCHOOLS · ${deal.city ? deal.city.toUpperCase() + " " : ""}${deal.zip}</div>
               <div style="font-size:20px;font-weight:700;color:${INK};margin:3px 0 6px 0;line-height:1.25;">
                 <a href="${addrLink}" style="color:${INK};text-decoration:none;">${deal.address}</a>
               </div>
@@ -207,21 +218,39 @@ export function buildHtml(report: Report): string {
   const stats = report.stats;
   const dateStr = report.date_str;
 
-  const cards = deals.map((d, i) => dealCard(d, i + 1)).join("");
+  // Re-alerts that are ONLY here for a days-on-market milestone get their own
+  // section; new / price-changed deals (milestone or not) stay up top.
+  const isStillListed = (d: Listing) => !!d.dom_milestone && !d.is_new && !d.price_change;
+  const fresh = deals.filter((d) => !isStillListed(d));
+  const stillListed = deals.filter(isStillListed);
+  const sectionHead = (title: string, sub: string) => `
+      <tr><td style="padding:6px 4px 12px 4px;">
+        <div style="font-size:13px;color:${PURPLE};font-weight:800;letter-spacing:.8px;text-transform:uppercase;">${title}</div>
+        <div style="font-size:13px;color:${MUTED};margin-top:2px;">${sub}</div>
+      </td></tr>`;
+  let cards = fresh.map((d, i) => dealCard(d, i + 1)).join("");
+  if (stillListed.length) {
+    cards +=
+      sectionHead(
+        "Still on the market",
+        `Deals we've sent before that just passed ${config.DOM_MILESTONES.join(" / ")} days on market.`,
+      ) + stillListed.map((d, i) => dealCard(d, fresh.length + i + 1)).join("");
+  }
 
   const newCount = deals.filter((d) => d.is_new).length;
   const dropCount = deals.filter((d) => (d.price_change || 0) < 0).length;
+  const areaLabel = `${config.DISTRICTS.length} school districts`;
 
   let intro: string;
   if (deals.length) {
     intro =
       `<strong style="color:${INK};">${deals.length}</strong> propert` +
       `${deals.length === 1 ? "y" : "ies"} clear the 7% cap target ` +
-      `(of ${stats.scanned || 0} scanned across ${config.TOWNS.length} towns).`;
+      `(of ${stats.scanned || 0} scanned across ${areaLabel}).`;
   } else {
     intro =
       `No properties cleared the 7% cap target today ` +
-      `(scanned ${stats.scanned || 0} listings across ${config.TOWNS.length} towns).`;
+      `(scanned ${stats.scanned || 0} listings across ${areaLabel}).`;
   }
 
   let summaryChips = "";
@@ -229,6 +258,7 @@ export function buildHtml(report: Report): string {
     ["Qualified deals", deals.length],
     ["New", newCount],
     ["Price drops", dropCount],
+    ...(stillListed.length ? [["Still listed", stillListed.length] as [string, number]] : []),
     ["Scanned", stats.scanned || 0],
   ];
   for (const [label, val] of chipData) {
@@ -254,7 +284,7 @@ export function buildHtml(report: Report): string {
         </table>
       </td></tr>`;
 
-  const townsLine = config.TOWNS.map((t) => t.name).join(", ");
+  const districtsLine = config.DISTRICTS.map((d) => d.district).join(", ");
 
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -294,8 +324,11 @@ export function buildHtml(report: Report): string {
             <strong style="color:${INK};">Garage:</strong> We prefer 2-car. <span style="color:${AMBER};">⚠️ 1-Car Garage</span> means just that —
             check the driveway/parking from photos. "Garage not confirmed" means we couldn't read it from the listing; verify on Redfin.
             Single-family homes with no garage are excluded; multi-family is kept regardless.<br>
-            <strong style="color:${INK};">Towns screened:</strong> ${townsLine}. Source: Redfin. Single-family capped at ${money(config.MAX_PRICE)};
-            no cap on multi-family.
+            <strong style="color:${INK};">School districts screened:</strong> ${districtsLine} — by official boundary,
+            so homes with a neighbouring town's mailing address are included. Source: Redfin. Single-family capped at ${money(config.MAX_PRICE)};
+            no cap on multi-family.<br>
+            <strong style="color:${INK};">Still on the market:</strong> qualifying deals are re-sent once each at
+            ${config.DOM_MILESTONES.join(", ")} days on market.
           </div>
         </td></tr>
 

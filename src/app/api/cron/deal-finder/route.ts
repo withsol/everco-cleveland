@@ -2,24 +2,29 @@
  * Ever Co daily rental deal finder — Vercel cron route.
  *
  * Replicates the original Python orchestrator (main.py):
- *   1. Scrape Redfin gis-csv for the 6 target towns.
+ *   1. Scrape Redfin gis-csv around the 6 target school districts; keep
+ *      listings whose coordinates fall inside a district boundary.
  *   2. First-pass screen with estimated taxes at a relaxed cap to form a
  *      candidate pool.
  *   3. Pull real taxes/insurance/HOA + photo + garage for candidates only
  *      (overrides first, then best-effort detail-page fetch within a deadline).
  *   4. Re-analyze on real numbers, apply the true 7% filter, then garage rules.
- *   5. Diff against the Supabase seen table; email only new / price-changed.
- *   6. On a successful send, upsert every scraped listing's price.
+ *   5. Diff against the Supabase seen table; email new / price-changed deals,
+ *      plus deals hitting a days-on-market milestone (15/30/45/60/90/100) that
+ *      hasn't been sent for them yet.
+ *   6. On a successful send, upsert every scraped listing's price and record
+ *      the milestones sent.
  *
  * Auth: Vercel Cron sends `Authorization: Bearer ${CRON_SECRET}`. Manual runs
- * may pass `?dry=1` (with the secret) to build a preview without sending/saving.
+ * may pass `?dry=1` (with the secret) to build a preview without sending/saving;
+ * `?dry=json` returns the run log and the deals that would be shown instead.
  */
 import { NextResponse } from "next/server";
 import * as config from "@/lib/deal-finder/config";
 import * as scraper from "@/lib/deal-finder/scraper";
 import * as analyzer from "@/lib/deal-finder/analyzer";
 import * as emailer from "@/lib/deal-finder/emailer";
-import { loadSeen, saveSeen } from "@/lib/deal-finder/store";
+import { loadDomAlerts, loadSeen, saveDomAlerts, saveSeen } from "@/lib/deal-finder/store";
 import type { Listing } from "@/lib/deal-finder/types";
 
 export const runtime = "nodejs";
@@ -66,7 +71,8 @@ export async function GET(req: Request) {
   }
 
   const url = new URL(req.url);
-  const dryRun = url.searchParams.get("dry") === "1";
+  const dryParam = url.searchParams.get("dry");
+  const dryRun = dryParam === "1" || dryParam === "json";
   const showAll = url.searchParams.get("all") === "1";
 
   const startedAt = Date.now();
@@ -125,7 +131,7 @@ export async function GET(req: Request) {
     note(`${deals.length} deals after garage rules.`);
 
     // 3. Diff against history (Supabase).
-    const seen = await loadSeen();
+    const [seen, domAlerts] = await Promise.all([loadSeen(), loadDomAlerts()]);
     const firstRun = Object.keys(seen).length === 0;
     for (const d of deals) {
       const lid = scraper.listingId(d);
@@ -133,11 +139,17 @@ export async function GET(req: Request) {
       if (!prev) {
         d.is_new = true;
         d.price_change = 0;
+        d.price_change_since_first = 0;
       } else {
         d.is_new = false;
         d.price_change = d.price - (prev.last_price ?? d.price);
+        d.price_change_since_first = d.price - (prev.asking_price ?? d.price);
       }
+      const milestone = analyzer.dueDomMilestone(d.days_on_market, domAlerts[lid]);
+      if (milestone) d.dom_milestone = milestone;
     }
+    const milestoneCount = deals.filter((d) => d.dom_milestone).length;
+    if (milestoneCount) note(`${milestoneCount} deal(s) hit a days-on-market milestone.`);
 
     // 4. Decide what to show.
     let shown: Listing[];
@@ -146,8 +158,8 @@ export async function GET(req: Request) {
       shown = deals;
       mode = firstRun ? "baseline (all qualifying deals)" : "all qualifying deals";
     } else {
-      shown = deals.filter((d) => d.is_new || d.price_change);
-      mode = "new + price-changed deals";
+      shown = deals.filter((d) => d.is_new || d.price_change || d.dom_milestone);
+      mode = "new + price-changed + days-on-market milestone deals";
     }
     note(`Email mode: ${mode} — ${shown.length} to show.`);
 
@@ -177,6 +189,36 @@ export async function GET(req: Request) {
     if (shown.length)
       subject += ` (${shown.length} deal${shown.length !== 1 ? "s" : ""})`;
 
+    if (dryParam === "json") {
+      return NextResponse.json({
+        ok: true,
+        dry: true,
+        scanned: listings.length,
+        qualified: deals.length,
+        byDistrict: Object.fromEntries(
+          config.DISTRICTS.map((dist) => [
+            dist.name,
+            listings.filter((l) => l.town === dist.name).length,
+          ]),
+        ),
+        shown: shown.map((d) => ({
+          id: scraper.listingId(d),
+          address: d.address,
+          city: d.city,
+          zip: d.zip,
+          district: d.town,
+          price: d.price,
+          days_on_market: d.days_on_market,
+          best_cap: d.best_cap,
+          is_new: d.is_new,
+          price_change: d.price_change,
+          dom_milestone: d.dom_milestone ?? null,
+        })),
+        log,
+        elapsedMs: Date.now() - startedAt,
+      });
+    }
+
     if (dryRun) {
       // Return the HTML preview without sending or saving.
       return new NextResponse(html, {
@@ -191,6 +233,8 @@ export async function GET(req: Request) {
     // 6. Update history AFTER a successful send.
     const saved = await saveSeen(listings, seen, nowIso);
     note(`Saved ${saved} listings to deal_finder_seen.`);
+    const alerted = await saveDomAlerts(shown);
+    if (alerted) note(`Recorded ${alerted} days-on-market milestone alert(s).`);
 
     return NextResponse.json({
       ok: true,

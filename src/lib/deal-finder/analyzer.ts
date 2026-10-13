@@ -64,10 +64,23 @@ export function analyzeListing(listing: Listing): Listing {
   return listing;
 }
 
-/** Estimate annual property taxes from the town effective tax rate. */
-export function estimateTaxes(price: number, zipCode: string): number {
-  const rate = config.EFFECTIVE_TAX_RATE[zipCode] ?? config.DEFAULT_TAX_RATE;
+/** Estimate annual property taxes from the district's effective tax rate. */
+export function estimateTaxes(price: number, districtName: string): number {
+  const rate = config.EFFECTIVE_TAX_RATE[districtName] ?? config.DEFAULT_TAX_RATE;
   return Math.round(price * rate);
+}
+
+/**
+ * The days-on-market milestone a deal is due to be re-alerted for, or null.
+ * Picks the latest milestone reached; fires only within the grace window after
+ * it and only if it hasn't been sent for this listing before.
+ */
+export function dueDomMilestone(daysOnMarket: number, sent: Set<number> | undefined): number | null {
+  const reached = config.DOM_MILESTONES.filter((m) => m <= daysOnMarket);
+  if (!reached.length) return null;
+  const m = Math.max(...reached);
+  if (daysOnMarket - m >= config.DOM_MILESTONE_GRACE_DAYS) return null;
+  return sent?.has(m) ? null : m;
 }
 
 /** Apply the hard listing filters (beds/baths/type/price/status). */
