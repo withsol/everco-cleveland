@@ -1,8 +1,10 @@
 /**
  * Redfin scraper for the Ever Co deal finder.
  *
- * Pulls the public Redfin "gis-csv" export for each target zip (the same file
- * the "Download All" button produces) and normalizes the rows. For candidates
+ * Pulls the public Redfin "gis-csv" export (the same file the "Download All"
+ * button produces) for a map area around each target school district, then
+ * keeps only rows whose coordinates fall inside a district boundary — so homes
+ * with a neighbouring town's zip/mailing city are still caught. For candidates
  * that clear the first-pass screen, fetches the detail page to pull real
  * taxes/insurance/HOA + photo + garage.
  *
@@ -10,7 +12,7 @@
  * block non-browser clients via TLS fingerprinting. The original Python used
  * curl_cffi to impersonate Chrome's TLS handshake — Node's fetch can't do that,
  * so from a serverless IP some requests may be challenged. Everything here
- * degrades gracefully: a blocked town is skipped; a blocked detail page keeps
+ * degrades gracefully: a blocked district is skipped; a blocked detail page keeps
  * estimated values flagged "(est)". overrides.json supplies real numbers for
  * already-diligenced listings regardless of WAF state.
  *
@@ -19,7 +21,8 @@
 import * as config from "./config";
 import { estimateTaxes } from "./analyzer";
 import overridesData from "./overrides.json";
-import type { Listing, Override, Town } from "./types";
+import { districtFor, searchPoly, type District } from "./districts";
+import type { Listing, Override } from "./types";
 
 const GIS_CSV_URL = "https://www.redfin.com/stingray/api/gis-csv";
 
@@ -38,11 +41,15 @@ const BROWSER_HEADERS: Record<string, string> = {
   "Upgrade-Insecure-Requests": "1",
 };
 
-function buildUrl(regionId: string): string {
+// Redfin caps one export at this many homes. A district search returning this
+// many may be truncated — logged so it's visible.
+const MAX_HOMES = 350;
+
+function buildUrl(poly: string): string {
   const params =
-    `?al=1&market=${config.REDFIN_MARKET}&num_homes=350` +
+    `?al=1&market=${config.REDFIN_MARKET}&num_homes=${MAX_HOMES}` +
     `&ord=redfin-recommended-asc&page_number=1` +
-    `&region_id=${regionId}&region_type=2` +
+    `&poly=${encodeURIComponent(poly)}` +
     `&status=1&uipt=${config.REDFIN_UIPT}&v=8`;
   return GIS_CSV_URL + params;
 }
@@ -119,28 +126,54 @@ function getUrl(row: Record<string, string>): string {
   return "";
 }
 
-function normalizeRow(row: Record<string, string>, town: Town): Listing {
+/**
+ * Which target district a CSV row belongs to. Coordinates decide; a row with
+ * no coordinates (rare) falls back to its mailing city matching a district's
+ * name. Returns null for rows outside all six districts.
+ */
+function rowDistrict(
+  row: Record<string, string>,
+): { district: District; lat: number | null; lng: number | null } | null {
+  const lat = toFloat(row["LATITUDE"], NaN);
+  const lng = toFloat(row["LONGITUDE"], NaN);
+  if (Number.isFinite(lat) && Number.isFinite(lng)) {
+    const district = districtFor(lat, lng);
+    return district ? { district, lat, lng } : null;
+  }
+  const city = (row["CITY"] || "").trim().toLowerCase();
+  const district = config.DISTRICTS.find((d) => d.name.toLowerCase() === city);
+  return district ? { district, lat: null, lng: null } : null;
+}
+
+function normalizeRow(
+  row: Record<string, string>,
+  district: District,
+  lat: number | null,
+  lng: number | null,
+): Listing {
   const propType = (row["PROPERTY TYPE"] || "").trim();
   const isMf = ["multi-family", "multi family", "duplex"].some((mf) =>
     propType.toLowerCase().includes(mf),
   );
 
   const price = toInt(row["PRICE"]);
-  const zipCode = (row["ZIP OR POSTAL CODE"] || town.zip).trim();
+  const zipCode = (row["ZIP OR POSTAL CODE"] || "").trim();
   let url = getUrl(row);
   if (url && !url.startsWith("http")) url = "https://www.redfin.com" + url;
 
-  const taxes = estimateTaxes(price, zipCode);
+  const taxes = estimateTaxes(price, district.name);
   const hoaMonthly = toInt(row["HOA/MONTH"]);
 
   return {
     source: "redfin",
     mls: (row["MLS#"] || "").trim(),
     address: (row["ADDRESS"] || "").trim(),
-    city: (row["CITY"] || town.name).trim(),
+    city: (row["CITY"] || "").trim(),
     state: (row["STATE OR PROVINCE"] || "OH").trim(),
     zip: zipCode,
-    town: town.name,
+    town: district.name,
+    latitude: lat,
+    longitude: lng,
     price,
     beds: toInt(row["BEDS"]),
     baths: toFloat(row["BATHS"]),
@@ -188,33 +221,40 @@ async function fetchWithTimeout(
   }
 }
 
-async function scrapeTown(town: Town): Promise<Listing[]> {
-  const url = buildUrl(town.region_id);
-  const headers = {
-    ...BROWSER_HEADERS,
-    Referer: `https://www.redfin.com/zipcode/${town.zip}`,
-  };
+async function scrapeDistrict(district: District): Promise<Listing[]> {
+  const url = buildUrl(searchPoly(district));
+  const headers = { ...BROWSER_HEADERS, Referer: "https://www.redfin.com/" };
   const resp = await fetchWithTimeout(url, headers, 15000);
   if (!resp || resp.status !== 200) {
-    console.warn(`  ! ${town.name}: HTTP ${resp ? resp.status : "no-response"}`);
+    console.warn(`  ! ${district.name}: HTTP ${resp ? resp.status : "no-response"}`);
     return [];
   }
-  const text = await resp.text();
-  const rows = parseCsv(text);
-  const listings = rows
-    .filter((r) => (r["ADDRESS"] || "").trim())
-    .map((r) => normalizeRow(r, town));
-  console.log(`  + ${town.name} ${listings.length} listings`);
+  const rows = parseCsv(await resp.text()).filter((r) => (r["ADDRESS"] || "").trim());
+  if (rows.length >= MAX_HOMES) {
+    console.warn(`  ! ${district.name}: hit Redfin's ${MAX_HOMES}-home cap; results may be truncated`);
+  }
+  const listings: Listing[] = [];
+  for (const r of rows) {
+    const hit = rowDistrict(r);
+    if (hit) listings.push(normalizeRow(r, hit.district, hit.lat, hit.lng));
+  }
+  console.log(`  + ${district.name} area: ${rows.length} rows, ${listings.length} in a target district`);
   return listings;
 }
 
-/** Scrape every configured town in parallel. Returns deduped listings. */
+/**
+ * Scrape every district's map area in parallel. Search areas overlap at shared
+ * borders; each listing is assigned to the district its coordinates fall in
+ * and deduped.
+ */
 export async function scrapeAll(): Promise<Listing[]> {
-  const results = await Promise.all(config.TOWNS.map((t) => scrapeTown(t).catch(() => [])));
+  const results = await Promise.all(
+    config.DISTRICTS.map((d) => scrapeDistrict(d).catch(() => [])),
+  );
   const allListings: Listing[] = [];
   const seenIds = new Set<string>();
-  for (const townListings of results) {
-    for (const lst of townListings) {
+  for (const districtListings of results) {
+    for (const lst of districtListings) {
       const lid = listingId(lst);
       if (seenIds.has(lid)) continue;
       seenIds.add(lid);

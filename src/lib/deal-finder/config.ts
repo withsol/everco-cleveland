@@ -4,20 +4,12 @@
  * Ported from the original Python config.py. Edit values here to tune the
  * screen. Everything the analyzer and emailer need is centralized here.
  */
-import type { Town } from "./types";
 
 // ---------------------------------------------------------------------------
-// Target markets — Redfin "region_id"s for each zip (region_type=2 == zip code).
-// Region IDs are static; discovered once from Redfin's zip search pages.
+// Target markets — six SCHOOL DISTRICTS (boundaries in districts.json). A
+// listing qualifies by where it sits on the map, not its zip or mailing city.
 // ---------------------------------------------------------------------------
-export const TOWNS: Town[] = [
-  { name: "Bay Village", zip: "44140", region_id: "18531", county: "Cuyahoga" },
-  { name: "Avon Lake", zip: "44012", region_id: "18433", county: "Lorain" },
-  { name: "Rocky River", zip: "44116", region_id: "18507", county: "Cuyahoga" },
-  { name: "Strongsville", zip: "44136", region_id: "18527", county: "Cuyahoga" },
-  { name: "Westlake", zip: "44145", region_id: "18536", county: "Cuyahoga" },
-  { name: "Avon", zip: "44011", region_id: "18432", county: "Lorain" },
-];
+export { DISTRICTS } from "./districts";
 export const REDFIN_MARKET = "cleveland";
 
 // ---------------------------------------------------------------------------
@@ -72,22 +64,36 @@ export const TARGET_CAP = 0.07; // 7% cap rate target
 export const CANDIDATE_CAP = 0.055;
 export const SORT_RENT_LEVEL = 3000; // rank deals by cap rate at this rent level
 
+// ---------------------------------------------------------------------------
+// Days-on-market re-alerts
+// ---------------------------------------------------------------------------
+// A qualifying deal is emailed again (once per milestone) when its Redfin days
+// on market reaches each of these. Sent milestones are tracked in the
+// deal_finder_dom_alerts table.
+export const DOM_MILESTONES = [15, 30, 45, 60, 90, 100];
+// A milestone still fires if a run is missed or the deal only starts
+// qualifying a few days late, but not once it's this many days stale — so
+// listings that were already long past a milestone when this shipped (or that
+// qualify much later, e.g. after a price cut) don't trigger back-dated alerts.
+export const DOM_MILESTONE_GRACE_DAYS = 7;
+
 // Default annual insurance when not available from listing data.
 export const DEFAULT_INSURANCE = 2500;
 
 // Estimated *effective* annual property-tax rate (annual tax / market value),
-// keyed by zip. Redfin's CSV export does not include taxes, so taxes are
-// ESTIMATED from these county/town effective rates. Override per-listing via
+// keyed by school district (District.name). Redfin's CSV export does not
+// include taxes, so first-pass taxes are ESTIMATED from these rates; candidates
+// then get real figures from the detail page. Override per-listing via
 // overrides.json.
 export const EFFECTIVE_TAX_RATE: Record<string, number> = {
-  "44140": 0.025, // Bay Village  (Cuyahoga)
-  "44116": 0.0235, // Rocky River  (Cuyahoga)
-  "44145": 0.021, // Westlake     (Cuyahoga)
-  "44136": 0.0215, // Strongsville (Cuyahoga)
-  "44011": 0.0195, // Avon         (Lorain)
-  "44012": 0.0205, // Avon Lake    (Lorain)
+  "Bay Village": 0.025, // Cuyahoga
+  "Rocky River": 0.0235, // Cuyahoga
+  Westlake: 0.021, // Cuyahoga
+  Strongsville: 0.0215, // Cuyahoga
+  Avon: 0.0195, // Lorain
+  "Avon Lake": 0.0205, // Lorain
 };
-export const DEFAULT_TAX_RATE = 0.022; // fallback if a zip isn't listed above
+export const DEFAULT_TAX_RATE = 0.022; // fallback if a district isn't listed above
 
 // ---------------------------------------------------------------------------
 // Email (Resend)
